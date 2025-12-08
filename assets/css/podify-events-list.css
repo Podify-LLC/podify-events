@@ -1,0 +1,177 @@
+/* List-specific styles (horizontal cards with circular image) */
+
+.podify-events-wrapper.podify-events-layout-list .podify-events-grid {
+    gap: 24px;
+    display: grid !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    align-items: stretch;
+    grid-auto-rows: 1fr;
+}
+
+@media (max-width:1024px) {
+    .podify-events-wrapper.podify-events-layout-list .podify-events-grid {
+        gap: 22px;
+    }
+}
+
+@media (max-width:640px) {
+    .podify-events-wrapper.podify-events-layout-list .podify-events-grid {
+        gap: 20px;
+    }
+}
+
+.podify-events-wrapper.podify-events-layout-list .podify-event-card,
+.podify-list-card {
+    display: flex !important;
+    gap: 20px !important;
+    padding: 25px !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    background: #eef5f2;
+    border: 1px solid #e5e5e5;
+    border-radius: 18px;
+    box-shadow: none;
+    overflow: hidden;
+    box-sizing: border-box;
+    width: auto !important;
+    height: 100% !important;
+    min-width: 0 !important;
+}
+
+.podify-events-wrapper.podify-events-layout-list .event-image,
+.podify-list-image {
+    position: relative;
+    flex: 0 0 160px !important;
+    width: 160px !important;
+    height: 160px !important;
+    overflow: hidden;
+    /* border-radius: 50% !important; */
+    margin: 0 !important;
+}
+
+.podify-list-image {
+    grid-column: 1;
+}
+
+.podify-events-wrapper.podify-events-layout-list .event-image img,
+.podify-list-image img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    /* border-radius: 50% !important; */
+}
+
+.podify-events-wrapper.podify-events-layout-list .event-content,
+.podify-list-content {
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0 !important;
+    padding: 8px 0 !important;
+    min-width: 0 !important;
+}
+
+.podify-events-wrapper.podify-events-layout-list .event-actions {
+    margin-top: auto;
+}
+
+.podify-events-wrapper.podify-events-layout-list .event-title {
+    font-size: clamp(16px, 1.8vw, 20px);
+    line-height: 1.3;
+    margin: 0;
+}
+
+.podify-events-wrapper.podify-events-layout-list .podify-event-meta {
+    font-size: clamp(12px, 1.5vw, 14px);
+}
+
+.podify-events-wrapper.podify-events-layout-list .podify-event-meta .meta-item {
+    margin-bottom: 4px;
+    gap: 6px;
+}
+
+.podify-events-wrapper.podify-events-layout-list .podify-read-more {
+    font-size: clamp(12px, 1.4vw, 14px);
+    padding: clamp(6px, 1vw, 8px) clamp(12px, 1.4vw, 14px);
+}
+
+.podify-events-wrapper.podify-events-layout-list .event-content {
+    padding: 8px 0 !important;
+}
+
+.podify-events-wrapper.podify-events-layout-list .event-title {
+    font-size: 22px;
+    line-height: 1.25;
+    margin: 0 0 8px;
+}
+
+.podify-events-wrapper.podify-events-layout-list .podify-event-meta {
+    margin: 6px 0 !important;
+}
+
+.podify-events-wrapper.podify-events-layout-list .event-actions {
+    margin-top: auto;
+}
+
+.podify-events-wrapper.podify-events-layout-list .podify-badge {
+    bottom: 12px;
+    padding: 6px 16px;
+    font-size: 14px;
+    border-radius: 40px;
+}
+
+.podify-events-wrapper.podify-events-layout-list .podify-read-more {
+    display: inline-flex !important;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 18px;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1024px) {
+    .podify-events-layout-list .podify-events-grid {
+        gap: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .podify-events-layout-list .event-image {
+        flex: 0 0 120px !important;
+        width: 120px !important;
+        height: 120px !important;
+    }
+
+    .podify-events-layout-list .podify-event-card {
+        gap: 16px !important;
+        padding: 20px !important;
+    }
+
+    .podify-events-layout-list .event-title {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 640px) {
+    .podify-events-layout-list .podify-events-grid {
+        gap: 20px;
+    }
+
+    .podify-events-layout-list .event-image {
+        flex: 0 0 100px !important;
+        width: 100px !important;
+        height: 100px !important;
+    }
+
+    .podify-events-layout-list .event-title {
+        font-size: 16px;
+    }
+
+    .podify-events-layout-list .podify-event-meta {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,8 @@
+/* Grid-specific styles */
+.podify-events-layout-grid .podify-events-grid{ grid-template-columns: repeat(4, 1fr); }
+@media (max-width:1024px){ .podify-events-layout-grid .podify-events-grid{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width:640px){ .podify-events-layout-grid .podify-events-grid{ grid-template-columns: 1fr; } }
+
+.podify-events-layout-grid .podify-event-card{ flex-direction:column !important; }
+.podify-events-layout-grid .event-image{ border-radius:0; width:100%; height:277px; }
+.podify-events-layout-grid .event-image img{ border-radius:0; }

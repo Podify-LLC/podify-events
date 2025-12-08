@@ -1,0 +1,563 @@
+/* ================================
+   SMOOTH TRANSITIONS
+================================ */
+
+.podify-transitioning {
+   transition: all 0.3s ease !important;
+}
+
+.podify-transitioning .podify-events-grid {
+   transition: all 0.3s ease !important;
+}
+
+.podify-transitioning .podify-event-card {
+   transition: all 0.3s ease !important;
+}
+
+/* ================================
+   CRITICAL FIX: Grid Layout - FLEX-WRAP
+================================ */
+
+/* Grid without carousel: FLEX-WRAP with proper wrapping */
+.podify-events-layout-grid:not(.podify-events-carousel-enabled) .podify-events-grid {
+   display: flex !important;
+   flex-wrap: wrap !important;
+   justify-content: flex-start !important;
+   align-items: stretch !important;
+   gap: 30px !important;
+}
+
+.podify-events-layout-grid:not(.podify-events-carousel-enabled) .podify-event-card {
+   display: flex !important;
+   flex-direction: column !important;
+   height: auto !important;
+   min-height: 400px !important;
+   flex: 0 0 calc(25% - 22.5px) !important;
+   width: calc(25% - 22.5px) !important;
+   box-sizing: border-box !important;
+}
+
+.podify-events-layout-grid:not(.podify-events-carousel-enabled) .event-image {
+   width: 100% !important;
+   height: 277px !important;
+   border-radius: 0 !important;
+   flex-shrink: 0 !important;
+}
+
+/* Grid with carousel */
+.podify-events-layout-grid.podify-events-carousel-enabled .podify-events-grid {
+   display: flex !important;
+}
+
+.podify-events-layout-grid.podify-events-carousel-enabled .podify-event-card {
+   display: flex !important;
+   flex-direction: column !important;
+   height: 100% !important;
+}
+
+.podify-events-layout-grid.podify-events-carousel-enabled .event-image {
+   width: 100% !important;
+   height: 277px !important;
+   /* border-radius: 0 !important; */
+}
+
+.podify-events-layout-grid.podify-events-carousel-enabled .event-image img {
+   width: 100% !important;
+   height: 100% !important;
+   object-fit: cover !important;
+   /* border-radius: 0 !important; */
+}
+
+/* ================================
+   CRITICAL FIX: List Layout Styles
+================================ */
+
+/* List without carousel */
+.podify-events-layout-list:not(.podify-events-carousel-enabled) .podify-events-grid {
+   display: grid !important;
+   grid-template-columns: 1fr !important;
+   gap: 24px !important;
+}
+
+.podify-events-layout-list:not(.podify-events-carousel-enabled) .podify-event-card {
+   display: flex !important;
+   flex-direction: row !important;
+   align-items: center !important;
+   gap: 20px !important;
+   padding: 25px !important;
+   background: #eef5f2;
+   border: 1px solid #e5e5e5;
+   border-radius: 18px;
+   height: auto !important;
+   width: 100% !important;
+}
+
+.podify-events-layout-list:not(.podify-events-carousel-enabled) .event-image {
+   flex: 0 0 160px !important;
+   width: 160px !important;
+   height: 160px !important;
+   /* border-radius: 50% !important; */
+}
+
+.podify-events-layout-list:not(.podify-events-carousel-enabled) .event-image img {
+   width: 100% !important;
+   height: 100% !important;
+   object-fit: cover !important;
+   /* border-radius: 50% !important; */
+}
+
+.podify-events-layout-list:not(.podify-events-carousel-enabled) .event-content {
+   flex: 1 1 auto !important;
+   padding: 8px 0 !important;
+}
+
+/* List with carousel */
+.podify-events-layout-list.podify-events-carousel-enabled .podify-events-grid {
+   display: flex !important;
+}
+
+.podify-events-layout-list.podify-events-carousel-enabled .podify-event-card {
+   display: flex !important;
+   flex-direction: row !important;
+   align-items: center !important;
+   gap: 20px !important;
+   padding: 25px !important;
+   height: auto !important;
+}
+
+.podify-events-layout-list.podify-events-carousel-enabled .event-image {
+   flex: 0 0 160px !important;
+   width: 160px !important;
+   height: 160px !important;
+   /* border-radius: 50% !important; */
+}
+
+.podify-events-layout-list.podify-events-carousel-enabled .event-image img {
+   width: 100% !important;
+   height: 100% !important;
+   object-fit: cover !important;
+   /* border-radius: 50% !important; */
+}
+
+.podify-events-layout-list.podify-events-carousel-enabled .event-content {
+   flex: 1 1 auto !important;
+   padding: 8px 0 !important;
+}
+
+/* ================================
+   NAVIGATION AUTO-SHOW/HIDE - CRITICAL FIX
+================================ */
+
+/* Grid without carousel: AUTO HIDE navigation */
+.podify-events-layout-grid:not(.podify-events-carousel-enabled) .podify-nav-row,
+.podify-events-layout-grid:not(.podify-events-carousel-enabled) .swiper-pagination {
+   display: none !important;
+   visibility: hidden !important;
+   opacity: 0 !important;
+   pointer-events: none !important;
+   height: 0 !important;
+   width: 0 !important;
+   overflow: hidden !important;
+}
+
+/* List without carousel: AUTO SHOW navigation at bottom */
+.podify-events-layout-list:not(.podify-events-carousel-enabled) .podify-nav-row {
+   display: flex !important;
+   position: relative !important;
+   top: auto !important;
+   bottom: auto !important;
+   transform: none !important;
+   margin-top: 20px !important;
+   justify-content: center !important;
+   gap: 10px !important;
+   width: 100% !important;
+   pointer-events: auto !important;
+}
+
+.podify-events-layout-list:not(.podify-events-carousel-enabled) .swiper-pagination {
+   display: block !important;
+   position: relative !important;
+   bottom: auto !important;
+   margin-top: 20px !important;
+   text-align: center !important;
+}
+
+/* Carousel enabled: show navigation with proper positioning */
+.podify-events-carousel-enabled .podify-nav-row {
+   position: absolute !important;
+   top: 50% !important;
+   left: 0 !important;
+   right: 0 !important;
+   transform: translateY(-50%) !important;
+   z-index: 10 !important;
+   display: flex !important;
+   justify-content: space-between !important;
+   align-items: center !important;
+   width: 100% !important;
+   padding: 0 12px !important;
+   pointer-events: none !important;
+   margin: 0 !important;
+   height: auto !important;
+}
+
+.podify-events-carousel-enabled .podify-nav {
+   position: relative !important;
+   top: auto !important;
+   bottom: auto !important;
+   transform: none !important;
+   display: flex !important;
+   align-items: center !important;
+   justify-content: center !important;
+   width: 40px !important;
+   height: 40px !important;
+   /* border-radius: 50% !important; */
+   background: #fff !important;
+   border: 1px solid #e5e5e5 !important;
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+   cursor: pointer !important;
+   pointer-events: auto !important;
+   margin: 0 !important;
+   padding: 0 !important;
+}
+
+.podify-events-carousel-enabled .swiper-pagination {
+   position: absolute !important;
+   bottom: -4px !important;
+   left: 0 !important;
+   right: 0 !important;
+   text-align: center !important;
+   z-index: 5 !important;
+   display: block !important;
+   padding: 10px;
+}
+
+/* ================================
+   ELEMENTOR EDITOR - CRITICAL FIX FOR NAV POSITIONING
+================================ */
+
+/* When Elementor editor is active, ensure ALL navigation is visible */
+.elementor-editor-active .podify-events-wrapper.podify-events-carousel-enabled .podify-nav-row {
+   position: absolute !important;
+   top: 50% !important;
+   left: 0 !important;
+   right: 0 !important;
+   transform: translateY(-50%) !important;
+   z-index: 10 !important;
+   display: flex !important;
+   justify-content: space-between !important;
+   align-items: center !important;
+   width: 100% !important;
+   padding: 0 12px !important;
+   pointer-events: none !important;
+   margin: 0 !important;
+   height: auto !important;
+   opacity: 1 !important;
+   visibility: visible !important;
+}
+
+.elementor-editor-active .podify-events-wrapper.podify-events-carousel-enabled .podify-nav {
+   position: relative !important;
+   top: auto !important;
+   bottom: auto !important;
+   transform: none !important;
+   display: flex !important;
+   align-items: center !important;
+   justify-content: center !important;
+   width: 40px !important;
+   height: 40px !important;
+   border-radius: 50% !important;
+   background: #fff !important;
+   border: 1px solid #e5e5e5 !important;
+   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+   cursor: pointer !important;
+   pointer-events: auto !important;
+   margin: 0 !important;
+   padding: 0 !important;
+   opacity: 1 !important;
+   visibility: visible !important;
+}
+
+.elementor-editor-active .podify-events-wrapper.podify-events-carousel-enabled .swiper-pagination {
+   position: absolute !important;
+   bottom: -4px !important;
+   left: 0 !important;
+   right: 0 !important;
+   text-align: center !important;
+   z-index: 5 !important;
+   display: block !important;
+   padding: 10px;
+   opacity: 1 !important;
+   visibility: visible !important;
+}
+
+/* When editing a specific container, also target that container */
+.elementor-edit-area-active .podify-events-wrapper.podify-events-carousel-enabled .podify-nav-row,
+.e-con.e-active .podify-events-wrapper.podify-events-carousel-enabled .podify-nav-row,
+.elementor-editor-active .elementor-element.elementor-element-edit-mode .podify-events-wrapper.podify-events-carousel-enabled .podify-nav-row {
+   position: absolute !important;
+   top: 50% !important;
+   left: 0 !important;
+   right: 0 !important;
+   transform: translateY(-50%) !important;
+   z-index: 10 !important;
+   display: flex !important;
+   justify-content: space-between !important;
+   align-items: center !important;
+   width: 100% !important;
+   padding: 0 12px !important;
+   pointer-events: none !important;
+   margin: 0 !important;
+   height: auto !important;
+   opacity: 1 !important;
+   visibility: visible !important;
+}
+
+/* List layout in editor */
+.elementor-editor-active .podify-events-wrapper.podify-events-layout-list:not(.podify-events-carousel-enabled) .podify-nav-row {
+   display: flex !important;
+   position: relative !important;
+   top: auto !important;
+   bottom: auto !important;
+   transform: none !important;
+   margin-top: 20px !important;
+   justify-content: center !important;
+   gap: 10px !important;
+   width: 100% !important;
+   pointer-events: auto !important;
+   opacity: 1 !important;
+   visibility: visible !important;
+}
+
+.elementor-editor-active .podify-events-wrapper.podify-events-layout-list:not(.podify-events-carousel-enabled) .swiper-pagination {
+   display: block !important;
+   position: relative !important;
+   bottom: auto !important;
+   margin-top: 20px !important;
+   text-align: center !important;
+   opacity: 1 !important;
+   visibility: visible !important;
+}
+
+/* Grid without carousel in editor - HIDE */
+.elementor-editor-active .podify-events-wrapper.podify-events-layout-grid:not(.podify-events-carousel-enabled) .podify-nav-row,
+.elementor-editor-active .podify-events-wrapper.podify-events-layout-grid:not(.podify-events-carousel-enabled) .swiper-pagination {
+   display: none !important;
+   visibility: hidden !important;
+   opacity: 0 !important;
+   pointer-events: none !important;
+   height: 0 !important;
+   width: 0 !important;
+   overflow: hidden !important;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+/* Grid layout responsive - maintain flex-wrap */
+@media (max-width: 1024px) {
+   .podify-events-layout-grid:not(.podify-events-carousel-enabled) .podify-event-card {
+      flex: 0 0 calc(50% - 15px) !important;
+      width: calc(50% - 15px) !important;
+   }
+}
+
+@media (max-width: 640px) {
+   .podify-events-layout-grid:not(.podify-events-carousel-enabled) .podify-event-card {
+      flex: 0 0 100% !important;
+      width: 100% !important;
+   }
+}
+
+/* List responsive */
+@media (max-width: 768px) {
+   .podify-nav {
+      width: 36px !important;
+      height: 36px !important;
+   }
+
+   .podify-arrow-icon {
+      width: 14px !important;
+      height: 14px !important;
+      font-size: 14px !important;
+   }
+
+   .podify-nav-row {
+      padding: 0 8px !important;
+   }
+
+   .podify-events-layout-list .event-image {
+      flex: 0 0 120px !important;
+      width: 120px !important;
+      height: 120px !important;
+   }
+
+   .podify-events-layout-list.podify-events-carousel-enabled .event-image {
+      flex: 0 0 120px !important;
+      width: 120px !important;
+      height: 120px !important;
+   }
+}
+
+@media (max-width: 640px) {
+   .podify-events-layout-list .event-image {
+      flex: 0 0 100px !important;
+      width: 100px !important;
+      height: 100px !important;
+   }
+
+   .podify-events-layout-list.podify-events-carousel-enabled .event-image {
+      flex: 0 0 100px !important;
+      width: 100px !important;
+      height: 100px !important;
+   }
+}
+
+/* ================================
+   ELEMENTOR EDITOR RESPONSIVE
+================================ */
+
+@media (max-width: 1024px) {
+   .elementor-editor-active .podify-events-wrapper.podify-events-layout-grid:not(.podify-events-carousel-enabled) .podify-event-card {
+      flex: 0 0 calc(50% - 15px) !important;
+      width: calc(50% - 15px) !important;
+   }
+}
+
+@media (max-width: 768px) {
+   .elementor-editor-active .podify-events-wrapper.podify-events-carousel-enabled .podify-nav {
+      width: 36px !important;
+      height: 36px !important;
+   }
+
+   .elementor-editor-active .podify-events-wrapper.podify-events-carousel-enabled .podify-arrow-icon {
+      width: 14px !important;
+      height: 14px !important;
+      font-size: 14px !important;
+   }
+
+   .elementor-editor-active .podify-events-wrapper.podify-events-carousel-enabled .podify-nav-row {
+      padding: 0 8px !important;
+   }
+}
+
+@media (max-width: 640px) {
+   .elementor-editor-active .podify-events-wrapper.podify-events-layout-grid:not(.podify-events-carousel-enabled) .podify-event-card {
+      flex: 0 0 100% !important;
+      width: 100% !important;
+   }
+}
+
+/* ================================
+   IMAGE BORDER RADIUS FIX - Ensure editor settings apply to frontend
+================================ */
+
+/* Grid layout - image border radius */
+.podify-events-layout-grid .event-image {
+    overflow: hidden !important;
+}
+
+.podify-events-layout-grid .event-image img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* List layout - image border radius */
+.podify-events-layout-list .event-image {
+    overflow: hidden !important;
+}
+
+.podify-events-layout-list .event-image img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+}
+
+/* Ensure border radius from Elementor applies */
+.elementor-widget-podify-events .event-image {
+    border-radius: inherit;
+}
+
+.elementor-widget-podify-events .event-image img {
+    border-radius: inherit;
+}
+
+/* Placeholder container border radius */
+.elementor-widget-podify-events .event-image {
+    position: relative;
+}
+
+/* Ensure badge doesn't overflow rounded corners */
+.event-image {
+    position: relative;
+    overflow: hidden;
+}
+
+/* ================================
+   MODAL Z-INDEX FIX - CRITICAL
+================================ */
+
+/* Ensure modal is ALWAYS on top */
+.podify-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 999999 !important;
+    /* display: flex !important; */
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.podify-modal__overlay {
+    position: absolute !important;
+    inset: 0 !important;
+    background: rgba(0, 0, 0, 0.45) !important;
+    z-index: 999998 !important;
+}
+
+.podify-modal__dialog {
+    position: relative !important;
+    z-index: 999999 !important;
+    max-height: 88vh !important;
+    overflow: hidden !important;
+}
+
+/* Above WordPress admin bar */
+body.admin-bar .podify-modal {
+    z-index: 999999 !important;
+    top: 0 !important;
+}
+
+/* Above common header menus (usually z-index: 1000-10000) */
+body .podify-modal {
+    z-index: 999999 !important;
+}
+
+/* Above Elementor editor */
+.elementor-editor-active .podify-modal {
+    z-index: 999999 !important;
+}
+
+/* Above sticky headers */
+body header.sticky .podify-modal,
+body .site-header.fixed .podify-modal {
+    z-index: 999999 !important;
+}
+
+/* Ensure modal overlay blocks interaction with everything below */
+.podify-modal__overlay {
+    pointer-events: auto !important;
+    touch-action: none !important;
+}
+
+/* Ensure modal content is clickable */
+.podify-modal__dialog {
+    pointer-events: auto !important;
+}
+
+/* Prevent body scroll when modal is open */
+body.podify-modal-open {
+    overflow: hidden !important;
+}

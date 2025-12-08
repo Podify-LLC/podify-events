@@ -1,0 +1,515 @@
+.podify-events-wrapper {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Grid Layout */
+.podify-events-grid {
+  display: grid;
+  gap: 30px;
+  align-items: start;
+  grid-template-columns: repeat(3, 1fr);
+  /* Added desktop default */
+}
+
+@media (max-width: 1024px) {
+  .podify-events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .podify-events-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Event Card */
+.podify-event-card {
+  background: #eef5f2;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s ease, box-shadow .2s ease;
+  margin: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.podify-event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+
+.event-image {
+  position: relative;
+  width: 100%;
+  height: 277px;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.event-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.podify-badge {
+  position: absolute;
+  background: #ffd200;
+  color: #000;
+  font-size: 14px;
+  padding: 6px 16px;
+  border-radius: 40px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  z-index: 2;
+  
+  /* Default positioning */
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  
+  /* CSS Variables for custom positioning */
+  --badge-offset-x: 0px;
+  --badge-offset-y: 0px;
+}
+
+.podify-status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.podify-status.status-upcoming {
+  background: #ffd200;
+  color: #000;
+}
+
+.podify-status.status-ongoing {
+  background: #d8f3dc;
+  color: #0a5;
+}
+
+.podify-status.status-ended {
+  background: #ededed;
+  color: #777;
+}
+
+.event-content {
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1 1 auto;
+}
+
+.event-title {
+  margin: 0 0 14px;
+  font-size: 22px;
+  line-height: 1.25;
+  color: #1a1a1a;
+  overflow: hidden;
+}
+
+.event-title a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.event-title a:hover {
+  color: #0073aa;
+}
+
+.podify-event-meta {
+  margin: 12px 0;
+}
+
+.podify-event-meta .meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #000000;
+  line-height: 1.4;
+}
+
+.podify-event-meta .meta-item .dashicons {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px;
+  color: #4B388F;
+}
+
+.podify-event-meta .meta-item .meta-text {
+  display: inline-block;
+  line-height: 18px;
+}
+
+.event-excerpt {
+  color: #555;
+  font-size: 15px;
+  line-height: 1.55;
+  margin-bottom: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.podify-read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  background: #ffd200;
+  color: #000;
+  text-decoration: none;
+  border-radius: 28px;
+  padding: 10px 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.podify-read-more:after {
+  content: "→";
+  font-size: 17px;
+}
+
+/* Single Event Layout */
+.podify-single-event.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.podify-single-event .single-event-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .podify-single-event .single-event-grid {
+    grid-template-columns: 320px 1fr;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .podify-single-event .single-event-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.podify-single-event .single-event-img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.10);
+  display: block;
+}
+
+.podify-single-event .single-event-map {
+  margin-top: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.podify-single-event .single-event-title {
+  font-size: 32px;
+  line-height: 1.2;
+  margin: 0 0 16px;
+  color: #1a1a1a;
+}
+
+.podify-single-event .single-event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 15px;
+  color: #555;
+}
+
+.podify-single-event .single-event-meta .meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.podify-single-event .single-event-content {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #333;
+}
+
+/* Modal */
+.podify-events-wrapper .podify-modal[hidden] {
+  display: none;
+}
+
+.podify-events-wrapper .podify-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.podify-events-wrapper .podify-modal__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+.podify-events-wrapper .podify-modal__dialog {
+  position: relative;
+  margin: 0 auto;
+  background: #fff;
+  width: min(900px, 86%);
+  max-height: 88vh;
+  border-radius: 14px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.podify-events-wrapper .podify-modal__close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: #ffd200;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: #000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  aspect-ratio: 1/1;
+  box-sizing: border-box;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.podify-events-wrapper .podify-modal__content {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1 1 auto;
+}
+
+.podify-events-wrapper .podify-modal .podify-popover {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.podify-events-wrapper .podify-modal .podify-popover__left {
+  flex: 0 0 min(420px, 40%);
+  max-width: min(420px, 40%);
+}
+
+.podify-events-wrapper .podify-modal .podify-popover__left>img {
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.podify-events-wrapper .podify-modal .podify-popover__map {
+  margin-top: 12px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.podify-events-wrapper .podify-modal .podify-popover__right {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+
+.podify-events-wrapper .podify-modal .podify-popover__title {
+  font-size: 28px;
+  line-height: 1.25;
+  margin: 0 0 12px !important;
+  color: #4B388F;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  font-family: "Very Vogue", serif;
+}
+
+.podify-events-wrapper .podify-modal .podify-popover__right .podify-event-meta,
+.podify-events-wrapper .podify-modal .podify-popover__right .event-excerpt,
+.podify-events-wrapper .podify-modal .podify-popover__right .event-content-full,
+.podify-events-wrapper .podify-modal .podify-popover__right .podify-popover__actions {
+  color: #000000;
+}
+
+.podify-events-wrapper .podify-modal .podify-popover .podify-event-meta .dashicons {
+  color: #4B388F;
+}
+
+.podify-events-wrapper .podify-modal .podify-popover .podify-event-meta {
+  margin: 8px 0 14px;
+}
+
+.podify-events-wrapper .podify-modal .podify-popover .podify-event-meta .meta-item {
+  margin-bottom: 6px;
+}
+
+.podify-events-wrapper .podify-modal .podify-popover .podify-popover__actions {
+  margin-top: 18px;
+}
+
+@media (max-width: 768px) {
+  .podify-events-wrapper .podify-modal .podify-popover {
+    flex-direction: column;
+  }
+
+  .podify-events-wrapper .podify-modal .podify-popover__left {
+    max-width: 100%;
+    flex: 0 0 auto;
+  }
+}
+
+.podify-events-wrapper .podify-modal__loading {
+  padding: 40px;
+  text-align: center;
+  color: #666;
+}
+
+.podify-events-wrapper .podify-modal__error {
+  padding: 40px;
+  text-align: center;
+  color: #b00020;
+}
+
+/* Modal content image fill */
+.podify-events-wrapper .podify-modal .podify-popover>img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  object-fit: contain;
+  margin: 0 0 16px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+/* Swiper/Carousel */
+.podify-events-wrapper--swiper {
+  position: relative;
+  width: 100%;
+}
+
+.podify-events-swiper {
+  width: 100%;
+  min-height: 302px;
+  padding: 20px 0;
+  margin: 12px 0;
+}
+
+.podify-events-swiper .swiper-wrapper {
+  display: flex;
+}
+
+.podify-events-swiper .swiper-slide {
+  box-sizing: border-box;
+  padding: 16px;
+}
+
+/* List Layout (if needed) */
+.podify-events-layout-list .podify-events-grid {
+  grid-template-columns: 1fr;
+}
+
+/* Horizontal positioning classes */
+.elementor-widget-podify-events .podify-badge {
+  /* Center is default, handled by transform */
+}
+
+/* When horizontal is left */
+body .elementor-widget-podify-events[class*="badge_position_horizontal-left"] .podify-badge,
+body .elementor-widget-podify-events .podify-badge[data-position-h="left"] {
+  left: 12px;
+  transform: translateX(0);
+}
+
+/* When horizontal is right */
+body .elementor-widget-podify-events[class*="badge_position_horizontal-right"] .podify-badge,
+body .elementor-widget-podify-events .podify-badge[data-position-h="right"] {
+  left: auto;
+  right: 12px;
+  transform: translateX(0);
+}
+
+/* When horizontal is center with left positioning */
+body .elementor-widget-podify-events[class*="badge_position_horizontal-center"] .podify-badge[data-position-h="left"],
+body .elementor-widget-podify-events[class*="badge_position_horizontal-center"] .podify-badge {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Apply offsets */
+.podify-badge {
+  margin-left: var(--badge-offset-x);
+  margin-top: var(--badge-offset-y);
+}
+
+/* When vertical is top */
+body .elementor-widget-podify-events .podify-badge[data-position-v="top"] {
+  top: 12px;
+  bottom: auto;
+}
+
+/* Modal z-index fix - CRITICAL */
+.podify-modal {
+  z-index: 999999 !important;
+}
+
+.podify-modal__overlay {
+  z-index: 999998 !important;
+}
+
+.podify-modal__dialog {
+  z-index: 999999 !important;
+}
+
+/* Ensure modal is above WordPress admin bar */
+body.admin-bar .podify-modal {
+  z-index: 999999 !important;
+}
+
+/* Ensure modal is above common header z-indexes */
+body .podify-modal {
+  z-index: 999999 !important;
+}
