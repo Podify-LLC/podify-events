@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.6 – 2026-01-22
+- Fixed layout conflicts in Elementor Editor by enforcing Flexbox grid with high-specificity selectors.
+- Fixed alignment issues where cards would not center/right align due to CSS Grid override.
+
 ## 1.0.5 – 2026-01-22
 - Updated Elementor widget layout to use CSS variables for better control and consistency.
 - Added Layout Alignment control (Left, Center, Right) for event cards.

@@ -1,10 +1,10 @@
 /* Grid-specific styles using Flexbox for better alignment control */
 .podify-events-layout-grid .podify-events-grid {
-    display: flex;
-    flex-wrap: wrap;
+    display: flex !important;
+    flex-wrap: wrap !important;
     gap: var(--podify-gap, 30px);
-    grid-template-columns: none; /* Reset any inherited grid styles */
-    justify-content: flex-start; /* Default alignment */
+    grid-template-columns: none !important;
+    justify-content: flex-start;
 }
 
 /* Calculate width based on columns and gap */
@@ -13,7 +13,7 @@
     flex-direction: column;
     /* Formula: (100% - (columns - 1) * gap) / columns */
     width: calc( (100% - (var(--podify-columns, 4) - 1) * var(--podify-gap, 30px)) / var(--podify-columns, 4) );
-    margin: 0;
+    margin: 0 !important; /* Ensure no external margins interfere */
     flex-shrink: 0;
     height: 100%; /* Ensure equal height */
 }
@@ -25,7 +25,7 @@
 .podify-align-tablet-center .podify-events-swiper .swiper-wrapper,
 .podify-align-mobile-center .podify-events-grid,
 .podify-align-mobile-center .podify-events-swiper .swiper-wrapper {
-    justify-content: center;
+    justify-content: center !important;
 }
 
 .podify-align-right .podify-events-grid,
@@ -34,7 +34,7 @@
 .podify-align-tablet-right .podify-events-swiper .swiper-wrapper,
 .podify-align-mobile-right .podify-events-grid,
 .podify-align-mobile-right .podify-events-swiper .swiper-wrapper {
-    justify-content: flex-end;
+    justify-content: flex-end !important;
 }
 
 .podify-align-left .podify-events-grid,
@@ -43,7 +43,7 @@
 .podify-align-tablet-left .podify-events-swiper .swiper-wrapper,
 .podify-align-mobile-left .podify-events-grid,
 .podify-align-mobile-left .podify-events-swiper .swiper-wrapper {
-    justify-content: flex-start;
+    justify-content: flex-start !important;
 }
 
 /* Ensure images fit nicely */
