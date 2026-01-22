@@ -248,7 +248,7 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
                 'options' => ['1' => '1', '2' => '2', '3' => '3', '4' => '4'],
                 'render_type' => 'template',
                 'selectors' => [
-                    '{{WRAPPER}} .podify-events-grid' => '--podify-columns: {{VALUE}};',
+                    '{{WRAPPER}} .podify-events-flex-grid' => '--podify-columns: {{VALUE}};',
                 ],
             ]);
             $this->add_responsive_control('column_spacing', [
@@ -259,7 +259,7 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
                 'default' => ['size' => 30],
                 'render_type' => 'template',
                 'selectors' => [
-                    '{{WRAPPER}} .podify-events-grid' => '--podify-gap: {{SIZE}}{{UNIT}};',
+                    '{{WRAPPER}} .podify-events-flex-grid' => '--podify-gap: {{SIZE}}{{UNIT}};',
                 ],
             ]);
             $this->add_responsive_control('layout_alignment', [
@@ -700,7 +700,8 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
                 echo '<div class="podify-events-swiper swiper">';
                 echo '<div class="swiper-wrapper">';
             } else {
-                echo '<div class="podify-events-' . esc_attr($layout) . '" role="list">';
+                $inner_class = ($layout === 'grid') ? 'podify-events-flex-grid' : 'podify-events-' . $layout;
+                echo '<div class="' . esc_attr($inner_class) . '" role="list">';
             }
 
             // Store posts to check for modals

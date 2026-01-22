@@ -321,7 +321,7 @@
             initSwiperForWrapper(section);
             return;
         }
-        var grid = section.querySelector('.podify-events-grid');
+        var grid = section.querySelector('.podify-events-grid, .podify-events-flex-grid');
         if (!grid) return;
 
         var widgetRoot = section.closest('.elementor-widget-podify-events') || section.closest('.elementor-widget');

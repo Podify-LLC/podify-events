@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.7 – 2026-01-22
+- Fixed persistent Elementor editor rendering issues by renaming the grid container class to `.podify-events-flex-grid` to avoid conflicts with base styles.
+- Updated JS initialization to support the new grid class.
+- Ensured backend editor preview matches frontend layout perfectly.
+
 ## 1.0.6 – 2026-01-22
 - Fixed layout conflicts in Elementor Editor by enforcing Flexbox grid with high-specificity selectors.
 - Fixed alignment issues where cards would not center/right align due to CSS Grid override.
