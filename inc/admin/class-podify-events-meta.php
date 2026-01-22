@@ -196,6 +196,14 @@ class Podify_Events_Meta
         </div>
 
         <div class="podify-field">
+            <label class="podify-label">
+                <input type="checkbox" name="podify_event_button_enabled" value="1" <?php checked($btn_on, '1'); ?>>
+                <?php _e('Enable Custom Button', 'podify-events'); ?>
+            </label>
+            <span class="podify-help"><?php _e('Check to enable custom button settings for this event.', 'podify-events'); ?></span>
+        </div>
+
+        <div class="podify-field">
             <label class="podify-label"><?php _e('Excerpt', 'podify-events'); ?></label>
             <textarea name="podify_event_excerpt" class="podify-input" rows="3" placeholder="<?php esc_attr_e('Short summary for this event', 'podify-events'); ?>"><?php echo esc_textarea($excerpt); ?></textarea>
         </div>

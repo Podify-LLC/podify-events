@@ -15,7 +15,7 @@ if ( is_admin() ) {
 /**
  * Plugin Name: Podify Events
  * Description: A custom event management system with database table + Elementor widget integration
- * Version: 1.0.0
+ * Version: 1.0.2
  * Tested up to: 6.6
  * Requires PHP: 7.4
  * Author: Podify Inc.
@@ -33,7 +33,7 @@ if (! defined('PODIFY_EVENTS_URL')) {
     define('PODIFY_EVENTS_URL', plugin_dir_url(__FILE__));
 }
 if (! defined('PODIFY_EVENTS_VERSION')) {
-    $base = '1.0.0';
+    $base = '1.0.2';
     if (function_exists('get_file_data')) {
         $plugin_data = get_file_data(__FILE__, ['Version' => 'Version'], 'plugin');
         if (! empty($plugin_data['Version'])) {

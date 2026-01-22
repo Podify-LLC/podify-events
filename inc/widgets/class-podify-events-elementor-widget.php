@@ -772,7 +772,14 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
                 }
 
                 if ($show_button) {
-                    echo '<div class="event-actions"><a class="podify-read-more ' . esc_attr($link_class) . '" data-event-id="' . esc_attr($post_id) . '" href="' . esc_url(get_permalink()) . '">' . esc_html($button_text) . '</a></div>';
+                    $event_btn_label = get_post_meta($post_id, '_podify_event_button_label', true);
+                    $event_btn_enabled = get_post_meta($post_id, '_podify_event_button_enabled', true) === '1';
+                    $event_btn_url = get_post_meta($post_id, '_podify_event_button_url', true);
+
+                    $final_btn_text = !empty($event_btn_label) ? $event_btn_label : $button_text;
+                    $final_btn_url = ($event_btn_enabled && !empty($event_btn_url)) ? $event_btn_url : get_permalink();
+
+                    echo '<div class="event-actions"><a class="podify-read-more ' . esc_attr($link_class) . '" data-event-id="' . esc_attr($post_id) . '" href="' . esc_url($final_btn_url) . '">' . esc_html($final_btn_text) . '</a></div>';
                 }
 
                 echo '</div></article>';
