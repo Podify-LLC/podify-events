@@ -751,19 +751,29 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
                 echo '<h3 id="event-title-' . esc_attr($post_id) . '" class="event-title"><a class="' . esc_attr($link_class) . '" data-event-id="' . esc_attr($post_id) . '" href="' . esc_url(get_permalink()) . '">' . esc_html(get_the_title()) . '</a></h3>';
 
                 echo '<div class="podify-event-meta">';
+                
+                // Date
                 if ($date) {
                     $human = ! empty($date_end) && $date_end !== $date
                         ? date_i18n('F j', strtotime($date)) . '—' . date_i18n('j Y', strtotime($date_end))
                         : date_i18n('F j Y', strtotime($date));
-                    echo '<div class="meta-item"><span class="dashicons dashicons-calendar"></span><span class="meta-text">' . esc_html($human) . '</span></div>';
+                } else {
+                    $human = __('TBA', 'podify-events');
                 }
+                echo '<div class="meta-item"><span class="dashicons dashicons-calendar"></span><span class="meta-text">' . esc_html($human) . '</span></div>';
+
+                // Time
                 if ($time) {
                     $time_human = date_i18n('g:i a', strtotime($time));
-                    echo '<div class="meta-item"><span class="dashicons dashicons-clock"></span><span class="meta-text">' . esc_html($time_human) . '</span></div>';
+                } else {
+                    $time_human = __('TBA', 'podify-events');
                 }
-                if ($address) {
-                    echo '<div class="meta-item"><span class="dashicons dashicons-location"></span><span class="meta-text">' . esc_html($address) . '</span></div>';
-                }
+                echo '<div class="meta-item"><span class="dashicons dashicons-clock"></span><span class="meta-text">' . esc_html($time_human) . '</span></div>';
+
+                // Address
+                $addr_display = $address ? $address : __('TBA', 'podify-events');
+                echo '<div class="meta-item"><span class="dashicons dashicons-location"></span><span class="meta-text">' . esc_html($addr_display) . '</span></div>';
+
                 echo '</div>';
 
                 if (! empty($settings['show_excerpt']) && $settings['show_excerpt'] === 'yes') {

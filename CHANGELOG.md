@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.3 – 2026-01-22
+- Added "TBA" placeholder for events missing Date, Time, or Address information.
+
 ## 1.0.2 – 2026-01-22
 - Improved CSS layout consistency: cards now have uniform height in grid/list views.
 - Fixed action button alignment: buttons are now pushed to the bottom of the card.
