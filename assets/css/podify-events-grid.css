@@ -1,8 +1,53 @@
-/* Grid-specific styles */
-.podify-events-layout-grid .podify-events-grid{ grid-template-columns: repeat(4, 1fr); }
-@media (max-width:1024px){ .podify-events-layout-grid .podify-events-grid{ grid-template-columns: repeat(2,1fr); } }
-@media (max-width:640px){ .podify-events-layout-grid .podify-events-grid{ grid-template-columns: 1fr; } }
+/* Grid-specific styles using Flexbox for better alignment control */
+.podify-events-layout-grid .podify-events-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--podify-gap, 30px);
+    grid-template-columns: none; /* Reset any inherited grid styles */
+    justify-content: flex-start; /* Default alignment */
+}
 
-.podify-events-layout-grid .podify-event-card{ flex-direction:column !important; }
-.podify-events-layout-grid .event-image{ border-radius:0; width:100%; height:277px; }
-.podify-events-layout-grid .event-image img{ border-radius:0; }
+/* Calculate width based on columns and gap */
+.podify-events-layout-grid .podify-event-card {
+    display: flex;
+    flex-direction: column;
+    /* Formula: (100% - (columns - 1) * gap) / columns */
+    width: calc( (100% - (var(--podify-columns, 4) - 1) * var(--podify-gap, 30px)) / var(--podify-columns, 4) );
+    margin: 0;
+    flex-shrink: 0;
+    height: 100%; /* Ensure equal height */
+}
+
+/* Alignment support */
+.podify-align-center .podify-events-grid,
+.podify-align-tablet-center .podify-events-grid,
+.podify-align-mobile-center .podify-events-grid {
+    justify-content: center;
+}
+
+.podify-align-right .podify-events-grid,
+.podify-align-tablet-right .podify-events-grid,
+.podify-align-mobile-right .podify-events-grid {
+    justify-content: flex-end;
+}
+
+.podify-align-left .podify-events-grid,
+.podify-align-tablet-left .podify-events-grid,
+.podify-align-mobile-left .podify-events-grid {
+    justify-content: flex-start;
+}
+
+/* Ensure images fit nicely */
+.podify-events-layout-grid .event-image {
+    border-radius: 0;
+    width: 100%;
+    height: 277px;
+    flex-shrink: 0;
+}
+
+.podify-events-layout-grid .event-image img {
+    border-radius: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

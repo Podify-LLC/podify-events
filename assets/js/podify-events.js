@@ -3,16 +3,9 @@
     var inEditor = !!(document.body && (document.body.classList.contains('elementor-editor-active') || document.body.classList.contains('elementor-edit-mode')));
 
     function applyGrid(container) {
-        var section = container.closest('.podify-events-wrapper');
-        if (!section) return;
-        var colsAttr = parseInt(section.getAttribute('data-columns') || '1', 10);
-        var style = section.getAttribute('data-style') || 'grid';
-        var maxCols = style === 'grid' ? 4 : 3;
-        var cols = Math.min(Math.max(1, colsAttr), maxCols);
-        var gap = parseInt(section.getAttribute('data-col-gap') || '30', 10);
-        if (!isNaN(cols) && !isNaN(gap)) {
-            container.setAttribute('style', 'display:grid;grid-template-columns:repeat(' + cols + ',1fr);gap:' + Math.max(0, gap) + 'px;');
-        }
+        // We rely on CSS variables for grid layout now.
+        // Just clear any inline styles that might have been added by Swiper or previous JS.
+        container.removeAttribute('style');
     }
 
     function destroySwiper(container) {

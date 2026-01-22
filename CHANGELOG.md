@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.5 – 2026-01-22
+- Updated Elementor widget layout to use CSS variables for better control and consistency.
+- Added Layout Alignment control (Left, Center, Right) for event cards.
+- Fixed layout consistency between Editor and Frontend.
+
 ## 1.0.4 – 2026-01-22
 - Fixed carousel layout: forced equal height for all event cards.
 - Fixed button alignment: buttons now consistently align to the bottom of the card, even with varying content length.

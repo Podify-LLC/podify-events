@@ -241,8 +241,47 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
 
             // Columns
             $this->start_controls_section('section_columns', ['label' => esc_html__('Column Options', 'podify-events'), 'tab' => Controls_Manager::TAB_CONTENT]);
-            $this->add_responsive_control('columns', ['label' => esc_html__('Columns', 'podify-events'), 'type' => Controls_Manager::SELECT, 'default' => '1', 'options' => ['1' => '1', '2' => '2', '3' => '3', '4' => '4'], 'render_type' => 'template']);
-            $this->add_responsive_control('column_spacing', ['label' => esc_html__('Column Spacing', 'podify-events'), 'type' => Controls_Manager::SLIDER, 'size_units' => ['px'], 'range' => ['px' => ['min' => 0, 'max' => 160]], 'default' => ['size' => 30], 'render_type' => 'template']);
+            $this->add_responsive_control('columns', [
+                'label' => esc_html__('Columns', 'podify-events'),
+                'type' => Controls_Manager::SELECT,
+                'default' => '4',
+                'options' => ['1' => '1', '2' => '2', '3' => '3', '4' => '4'],
+                'render_type' => 'template',
+                'selectors' => [
+                    '{{WRAPPER}} .podify-events-grid' => '--podify-columns: {{VALUE}};',
+                ],
+            ]);
+            $this->add_responsive_control('column_spacing', [
+                'label' => esc_html__('Column Spacing', 'podify-events'),
+                'type' => Controls_Manager::SLIDER,
+                'size_units' => ['px'],
+                'range' => ['px' => ['min' => 0, 'max' => 160]],
+                'default' => ['size' => 30],
+                'render_type' => 'template',
+                'selectors' => [
+                    '{{WRAPPER}} .podify-events-grid' => '--podify-gap: {{SIZE}}{{UNIT}};',
+                ],
+            ]);
+            $this->add_responsive_control('layout_alignment', [
+                'label' => esc_html__('Layout Alignment', 'podify-events'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'podify-events'),
+                        'icon' => 'eicon-h-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'podify-events'),
+                        'icon' => 'eicon-h-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'podify-events'),
+                        'icon' => 'eicon-h-align-right',
+                    ],
+                ],
+                'default' => 'left',
+                'prefix_class' => 'podify-align-',
+            ]);
             $this->end_controls_section();
 
             // Style simplified (image + content)
@@ -661,15 +700,7 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
                 echo '<div class="podify-events-swiper swiper">';
                 echo '<div class="swiper-wrapper">';
             } else {
-                $grid_style = '';
-                if ($layout === 'grid') {
-                    $grid_style = sprintf(
-                        ' style="display:grid; grid-template-columns: repeat(%d, 1fr); gap: %dpx;"',
-                        max(1, $columns),
-                        max(0, $col_spacing)
-                    );
-                }
-                echo '<div class="podify-events-' . esc_attr($layout) . '" role="list"' . $grid_style . '>';
+                echo '<div class="podify-events-' . esc_attr($layout) . '" role="list">';
             }
 
             // Store posts to check for modals

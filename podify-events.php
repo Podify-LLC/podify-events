@@ -15,7 +15,7 @@ if ( is_admin() ) {
 /**
  * Plugin Name: Podify Events
  * Description: A custom event management system with database table + Elementor widget integration
- * Version: 1.0.4
+ * Version: 1.0.5
  * Tested up to: 6.6
  * Requires PHP: 7.4
  * Author: Podify Inc.
