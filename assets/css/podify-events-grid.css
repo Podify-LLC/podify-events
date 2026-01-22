@@ -20,20 +20,29 @@
 
 /* Alignment support */
 .podify-align-center .podify-events-grid,
+.podify-align-center .podify-events-swiper .swiper-wrapper,
 .podify-align-tablet-center .podify-events-grid,
-.podify-align-mobile-center .podify-events-grid {
+.podify-align-tablet-center .podify-events-swiper .swiper-wrapper,
+.podify-align-mobile-center .podify-events-grid,
+.podify-align-mobile-center .podify-events-swiper .swiper-wrapper {
     justify-content: center;
 }
 
 .podify-align-right .podify-events-grid,
+.podify-align-right .podify-events-swiper .swiper-wrapper,
 .podify-align-tablet-right .podify-events-grid,
-.podify-align-mobile-right .podify-events-grid {
+.podify-align-tablet-right .podify-events-swiper .swiper-wrapper,
+.podify-align-mobile-right .podify-events-grid,
+.podify-align-mobile-right .podify-events-swiper .swiper-wrapper {
     justify-content: flex-end;
 }
 
 .podify-align-left .podify-events-grid,
+.podify-align-left .podify-events-swiper .swiper-wrapper,
 .podify-align-tablet-left .podify-events-grid,
-.podify-align-mobile-left .podify-events-grid {
+.podify-align-tablet-left .podify-events-swiper .swiper-wrapper,
+.podify-align-mobile-left .podify-events-grid,
+.podify-align-mobile-left .podify-events-swiper .swiper-wrapper {
     justify-content: flex-start;
 }
 
