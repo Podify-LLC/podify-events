@@ -200,6 +200,36 @@
    height: auto !important;
 }
 
+/* ================================
+   CRITICAL FIX: Equal Height Carousel
+================================ */
+.podify-events-swiper .swiper-wrapper {
+    align-items: stretch !important;
+}
+
+.podify-events-swiper .swiper-slide {
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.podify-events-swiper .podify-event-card {
+    height: 100% !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.podify-events-swiper .event-content {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.podify-events-swiper .event-actions {
+    margin-top: auto !important;
+}
+
 .podify-events-carousel-enabled .podify-nav {
    position: relative !important;
    top: auto !important;

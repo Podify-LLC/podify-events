@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.4 – 2026-01-22
+- Fixed carousel layout: forced equal height for all event cards.
+- Fixed button alignment: buttons now consistently align to the bottom of the card, even with varying content length.
+
 ## 1.0.3 – 2026-01-22
 - Added "TBA" placeholder for events missing Date, Time, or Address information.
 
