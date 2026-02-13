@@ -58,7 +58,12 @@ class Github_Updater {
 
         $latest_release = $this->get_latest_release();
         if (!$latest_release) {
-            wp_send_json_error(['message' => 'Could not connect to GitHub']);
+            $token = $this->get_token();
+            $msg = 'Could not connect to GitHub.';
+            if (!$token) {
+                $msg .= ' If the repository is private, please set your GitHub token in the plugin settings or README instructions.';
+            }
+            wp_send_json_error(['message' => $msg]);
         }
 
         $new_version = ltrim($latest_release['tag_name'], 'v');
@@ -123,6 +128,13 @@ class Github_Updater {
 
         $response = wp_remote_get($url, $args);
         if (is_wp_error($response)) {
+            error_log('[Podify Events] GitHub API Error: ' . $response->get_error_message());
+            return false;
+        }
+
+        $code = wp_remote_retrieve_response_code($response);
+        if ($code !== 200) {
+            error_log('[Podify Events] GitHub API Error Code: ' . $code . ' for URL: ' . $url);
             return false;
         }
 
@@ -187,12 +199,19 @@ class Github_Updater {
     }
 
     /**
-     * Get the token from constant
+     * Get the token from constant or option
      */
     private function get_token() {
         if ($this->token_constant && defined($this->token_constant)) {
             return constant($this->token_constant);
         }
+        
+        // Also check for option as fallback (as mentioned in README)
+        $token = get_option('podify_github_token');
+        if ($token) {
+            return $token;
+        }
+
         return false;
     }
 }

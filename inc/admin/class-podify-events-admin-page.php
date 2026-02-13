@@ -139,7 +139,7 @@ class Podify_Events_Admin_Page {
             <aside class="seic-sidebar">
                 <div class="seic-sidebar-header">
                     <div class="seic-logo-container">
-                        <img src="<?php echo PODIFY_EVENTS_URL . 'assets/img/logo.png'; ?>" alt="Podify Events">
+                        <img src="<?php echo PODIFY_EVENTS_URL . 'assets/images/logo_cropped.png'; ?>" alt="Podify Events">
                     </div>
                     <div class="seic-unified-badge">
                         <span class="seic-v-text">v<?php echo esc_html($version); ?></span>

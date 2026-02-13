@@ -148,7 +148,7 @@ function podify_events_plugins_loaded()
 {
     // Initialize GitHub Updater
     if (is_admin() && class_exists('Podify\Github_Updater')) {
-        new Podify\Github_Updater(__FILE__, 'johnrodney', 'podify-events');
+        new Podify\Github_Updater(__FILE__, 'johnrodney', 'podify-events', 'PODIFY_GITHUB_TOKEN');
     }
 
     if (class_exists('Podify_Events_CPT')) {
@@ -277,7 +277,7 @@ function podify_events_ajax_event_details()
     $btn_on  = get_post_meta($id, '_podify_event_button_enabled', true);
     $btn_url = get_post_meta($id, '_podify_event_button_url', true);
     $btn_lbl = get_post_meta($id, '_podify_event_button_label', true);
-    $thumb = has_post_thumbnail($id) ? get_the_post_thumbnail_url($id, 'large') : (defined('PODIFY_EVENTS_URL') ? PODIFY_EVENTS_URL . 'assets/img/event-placeholder.png' : '');
+    $thumb = has_post_thumbnail($id) ? get_the_post_thumbnail_url($id, 'large') : (defined('PODIFY_EVENTS_URL') ? PODIFY_EVENTS_URL . 'assets/images/logo.png' : '');
     ob_start();
     echo '<div class="podify-popover">';
     echo '<div class="podify-popover__left">';
