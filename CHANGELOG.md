@@ -3,7 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## 1.0.9 – 2026-02-14
-- **New Admin Dashboard**: Implemented a modern, responsive "General" dashboard with a horizontal header and unified branding.
+- **Pro Version Upgrade**: Officially transitioned to the Pro version with enhanced branding and layout.
+- **New Admin Dashboard**: Implemented a modern, responsive "General" dashboard with a professional vertical sidebar layout.
 - **GitHub Updater Integration**: Added support for automated updates directly from GitHub repositories (Public/Private).
 - **Elementor Widget Enhancements**: Fixed carousel layout issues and improved responsiveness across breakpoints.
 - **Improved UI/UX**: Added professional badges, linear gradient banners, and streamlined navigation in the admin panel.

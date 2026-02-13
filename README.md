@@ -13,10 +13,10 @@ A lightweight and modern events management plugin designed for Podify, including
 - License URI: `https://www.gnu.org/licenses/gpl-2.0.html`
 
 ## Description
-Podify Events is a professional event management solution for WordPress, featuring a modern Elementor-powered display and a sleek admin dashboard. It includes a built-in GitHub auto-update mechanism for seamless version management.
+Podify Events Pro is a professional event management solution for WordPress, featuring a modern Elementor-powered display and a sleek admin dashboard. It includes a built-in GitHub auto-update mechanism for seamless version management.
 
 ### Key Features
-- **Modern Admin Dashboard**: A responsive "General" menu with professional layout and branding.
+- **Modern Pro Dashboard**: A responsive "General" menu with professional layout and branding.
 - **Elementor Integration**: Dedicated widget for Carousel, Grid, and List event displays.
 - **Comprehensive Management**: Easy control over event dates, times, locations, and organizers.
 - **GitHub Auto-Update**: Seamless updates from GitHub (Public or Private repositories).
@@ -36,8 +36,8 @@ new Podify_Events_GitHub_Updater( __FILE__, 'your-repo-slug', 'main' );
 
 ## Installation
 1. Upload the plugin folder to `wp-content/plugins/`
-2. Activate **Podify Events** from the Plugins menu.
-3. Go to the **Podify Events > General** menu to explore the dashboard.
+2. Activate **Podify Events Pro** from the Plugins menu.
+3. Go to the **Podify Events Pro > General** menu to explore the dashboard.
 4. (Optional) Set your GitHub token:
 
 ```php
@@ -47,10 +47,11 @@ update_option('podify_github_token', 'ghp_xxxxxxxxx');
 ## Changelog
 
 ### 1.0.9
-- New professional "General" admin dashboard.
+- Upgraded to **Pro Version** branding and features.
+- New professional vertical sidebar dashboard layout.
 - Refined Elementor widget layouts and responsiveness.
 - Enhanced GitHub Updater implementation.
-- Modernized UI with horizontal navigation and unified branding.
+- Modernized UI with unified Pro branding and badges.
 
 ### 1.0.0
 - Initial stable release.
@@ -60,7 +61,7 @@ update_option('podify_github_token', 'ghp_xxxxxxxxx');
 ## Upgrade Notice
 
 ### 1.0.9
-Significant UI update with a new professional dashboard and improved Elementor widget support.
+Significant UI update with a new professional Pro dashboard and improved Elementor widget support.
 
 ### 1.0.0
 First public release.
