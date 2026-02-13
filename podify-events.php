@@ -13,9 +13,9 @@ if ( is_admin() ) {
 // ---- end updater init ----
 
 /**
- * Plugin Name: Podify Events
+ * Plugin Name: Podify Events Pro
  * Description: A custom event management system with database table + Elementor widget integration
- * Version: 1.0.7
+ * Version: 1.0.9
  * Tested up to: 6.6
  * Requires PHP: 7.4
  * Author: Podify Inc.
@@ -101,6 +101,7 @@ $inc_files = [
     PODIFY_EVENTS_PATH . 'inc/post-types/class-podify-events-cpt.php',
     PODIFY_EVENTS_PATH . 'inc/admin/class-podify-events-admin.php',
     PODIFY_EVENTS_PATH . 'inc/admin/class-podify-events-meta.php',
+    PODIFY_EVENTS_PATH . 'inc/admin/class-podify-events-admin-page.php',
     PODIFY_EVENTS_PATH . 'inc/widgets/class-podify-events-widget-styles.php',
     PODIFY_EVENTS_PATH . 'inc/updater/class-podify-events-github-updater.php',
 ];
@@ -166,6 +167,9 @@ function podify_events_plugins_loaded()
     }
     if (class_exists('Podify_Events_Admin')) {
         new Podify_Events_Admin();
+    }
+    if (class_exists('Podify_Events_Admin_Page')) {
+        new Podify_Events_Admin_Page();
     }
     if (class_exists('Podify_Events_Meta')) {
         new Podify_Events_Meta();
@@ -302,7 +306,7 @@ function podify_events_ajax_event_details()
         }
         echo '<div class="meta-item"><span class="dashicons dashicons-calendar"></span><span class="meta-text">' . esc_html($human) . '</span></div>';
     } else {
-        echo '<div class="meta-item"><span class="dashicons dashicons-calendar"></span><span class="meta-text">' . esc_html__('TBA', 'podify-events') . '</span></div>';
+        echo '<div class="meta-item"><span class="dashicons dashicons-calendar"></span><span class="meta-text">' . esc_html__('TBD', 'podify-events') . '</span></div>';
     }
     if ($time) echo '<div class="meta-item"><span class="dashicons dashicons-clock"></span><span class="meta-text">' . esc_html(date_i18n('g:i a', strtotime($time))) . '</span></div>';
     if ($address) echo '<div class="meta-item"><span class="dashicons dashicons-location"></span><span class="meta-text">' . esc_html($address) . '</span></div>';

@@ -507,13 +507,13 @@
 }
 
 /* Ensure border radius from Elementor applies */
-.elementor-widget-podify-events .event-image {
+/* .elementor-widget-podify-events .event-image {
     border-radius: inherit;
 }
 
 .elementor-widget-podify-events .event-image img {
     border-radius: inherit;
-}
+} */
 
 /* Placeholder container border radius */
 .elementor-widget-podify-events .event-image {

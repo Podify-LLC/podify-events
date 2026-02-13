@@ -1,127 +1,168 @@
 <?php
-if (! defined('ABSPATH')) { exit; }
+/**
+ * GitHub Updater for Podify Events
+ * 
+ * Turns a GitHub repository into a WordPress update server.
+ * Supports both public and private repositories.
+ */
 
-class Podify_Events_GitHub_Updater {
-    public static function bootstrap() {
-        add_filter('pre_set_site_transient_update_plugins', [__CLASS__, 'check'], 10, 1);
-        add_filter('plugins_api', [__CLASS__, 'info'], 10, 3);
-        add_filter('upgrader_source_selection', [__CLASS__, 'normalize_source'], 10, 4);
+namespace Podify;
+
+if (!defined('ABSPATH')) exit;
+
+class Github_Updater {
+
+    private $file;
+    private $user;
+    private $repo;
+    private $token_constant;
+    private $slug;
+    private $basename;
+
+    /**
+     * Constructor
+     */
+    public function __construct($file, $user, $repo, $token_constant = '') {
+        $this->file = $file;
+        $this->user = $user;
+        $this->repo = $repo;
+        $this->token_constant = $token_constant;
+        $this->basename = plugin_basename($file); // e.g., podify-events/podify-events.php
+        $this->slug = dirname($this->basename);   // e.g., podify-events
+
+        // Hook into WP Updates
+        add_filter('pre_set_site_transient_update_plugins', [$this, 'check_for_update']);
+        
+        // Add plugin info (for "View details" link)
+        add_filter('plugins_api', [$this, 'plugin_popup_info'], 10, 3);
+
+        // Private Repo Support: Intercept outgoing HTTP requests to inject Bearer token
+        add_filter('http_request_args', [$this, 'inject_github_token'], 10, 2);
+
+        // Folder Normalization: Ensure extracted folder matches plugin slug
+        add_filter('upgrader_source_selection', [$this, 'normalize_folder_name'], 10, 4);
     }
 
-    protected static function get_repo() {
-        $repo = defined('PODIFY_EVENTS_GITHUB_REPO') ? PODIFY_EVENTS_GITHUB_REPO : '';
-        $repo = apply_filters('podify_events_github_repo', $repo);
-        return is_string($repo) ? trim($repo) : '';
-    }
-
-    protected static function get_token() {
-        $token = defined('PODIFY_EVENTS_GITHUB_TOKEN') ? PODIFY_EVENTS_GITHUB_TOKEN : '';
-        $token = apply_filters('podify_events_github_token', $token);
-        return is_string($token) ? trim($token) : '';
-    }
-
-    protected static function get_branch() {
-        $branch = defined('PODIFY_EVENTS_GITHUB_BRANCH') ? PODIFY_EVENTS_GITHUB_BRANCH : 'main';
-        $branch = apply_filters('podify_events_github_branch', $branch);
-        return is_string($branch) ? trim($branch) : 'main';
-    }
-
-    protected static function api_get($url) {
-        $args = [
-            'timeout' => 15,
-            'headers' => [
-                'User-Agent' => 'WordPress/' . get_bloginfo('version') . '; ' . home_url('/'),
-                'Accept' => 'application/vnd.github+json',
-            ],
-        ];
-        $token = self::get_token();
-        if ($token) { $args['headers']['Authorization'] = 'Bearer ' . $token; }
-        $res = wp_remote_get($url, $args);
-        if (is_wp_error($res)) { return null; }
-        $code = wp_remote_retrieve_response_code($res);
-        if ($code !== 200) { return null; }
-        $body = wp_remote_retrieve_body($res);
-        if (! $body) { return null; }
-        $json = json_decode($body, true);
-        return is_array($json) ? $json : null;
-    }
-
-    protected static function latest_release() {
-        $repo = self::get_repo();
-        if (! $repo) { return null; }
-        $release = self::api_get('https://api.github.com/repos/' . rawurlencode($repo) . '/releases/latest');
-        if (is_array($release) && ! empty($release['tag_name'])) {
-            $ver = ltrim($release['tag_name'], 'v');
-            $zip = isset($release['zipball_url']) ? $release['zipball_url'] : '';
-            return ['version' => $ver, 'zip' => $zip, 'url' => 'https://github.com/' . $repo . '/releases/latest'];
+    /**
+     * Check for updates from GitHub
+     */
+    public function check_for_update($transient) {
+        if (empty($transient->checked)) {
+            return $transient;
         }
-        $branch = self::get_branch();
-        $tags = self::api_get('https://api.github.com/repos/' . rawurlencode($repo) . '/tags');
-        if (is_array($tags) && ! empty($tags[0]['name'])) {
-            $ver = ltrim($tags[0]['name'], 'v');
-            $zip = 'https://api.github.com/repos/' . $repo . '/zipball/' . urlencode($tags[0]['name']);
-            return ['version' => $ver, 'zip' => $zip, 'url' => 'https://github.com/' . $repo . '/tags'];
-        }
-        $zip = 'https://api.github.com/repos/' . $repo . '/zipball/' . urlencode($branch);
-        return ['version' => date('Y.m.d'), 'zip' => $zip, 'url' => 'https://github.com/' . $repo];
-    }
 
-    protected static function compare_versions($a, $b) {
-        $a = trim((string)$a); $b = trim((string)$b);
-        if ($a === $b) { return 0; }
-        if (function_exists('version_compare')) { return version_compare($a, $b); }
-        return strcmp($a, $b);
-    }
-
-    public static function check($transient) {
-        if (! is_object($transient)) { $transient = (object) []; }
-        $repo = self::get_repo();
-        if (! $repo) { return $transient; }
-        $latest = self::latest_release();
-        if (! $latest || empty($latest['version']) || empty($latest['zip'])) { return $transient; }
-        $current = defined('PODIFY_EVENTS_VERSION') ? PODIFY_EVENTS_VERSION : '0.0.0';
-        if (self::compare_versions($latest['version'], $current) > 0) {
-            $plugin = plugin_basename(PODIFY_EVENTS_PATH . 'podify-events.php');
-            $item = new stdClass();
-            $item->slug = 'podify-events';
-            $item->plugin = $plugin;
-            $item->new_version = $latest['version'];
-            $item->url = $latest['url'];
-            $item->package = $latest['zip'];
-            if (! isset($transient->response)) { $transient->response = []; }
-            $transient->response[$plugin] = $item;
+        $latest_release = $this->get_latest_release();
+        if (!$latest_release) {
+            return $transient;
         }
+
+        $current_version = $transient->checked[$this->basename];
+        $new_version = ltrim($latest_release['tag_name'], 'v');
+
+        if (version_compare($new_version, $current_version, '>')) {
+            $obj = new \stdClass();
+            $obj->slug = $this->slug;
+            $obj->plugin = $this->basename;
+            $obj->new_version = $new_version;
+            $obj->url = "https://github.com/{$this->user}/{$this->repo}";
+            $obj->package = $latest_release['zipball_url'];
+            
+            $transient->response[$this->basename] = $obj;
+        }
+
         return $transient;
     }
 
-    public static function info($res, $action, $args) {
-        if ($action !== 'plugin_information') { return $res; }
-        if (! isset($args->slug) || $args->slug !== 'podify-events') { return $res; }
-        $repo = self::get_repo();
-        if (! $repo) { return $res; }
-        $latest = self::latest_release();
-        $obj = new stdClass();
-        $obj->name = 'Podify Events';
-        $obj->slug = 'podify-events';
-        $obj->version = $latest && ! empty($latest['version']) ? $latest['version'] : (defined('PODIFY_EVENTS_VERSION') ? PODIFY_EVENTS_VERSION : '1.0.0');
-        $obj->author = 'Podify';
-        $obj->homepage = 'https://github.com/' . $repo;
-        $obj->download_link = $latest && ! empty($latest['zip']) ? $latest['zip'] : '';
-        $obj->sections = [ 'description' => 'Podify Events' ];
-        return $obj;
+    /**
+     * Get latest release data from GitHub API
+     */
+    private function get_latest_release() {
+        $url = "https://api.github.com/repos/{$this->user}/{$this->repo}/releases/latest";
+        
+        $args = [
+            'headers' => [
+                'Accept' => 'application/vnd.github.v3+json',
+                'User-Agent' => 'WordPress/' . get_bloginfo('version') . '; ' . home_url('/')
+            ]
+        ];
+
+        $token = $this->get_token();
+        if ($token) {
+            $args['headers']['Authorization'] = "Bearer $token";
+        }
+
+        $response = wp_remote_get($url, $args);
+        if (is_wp_error($response)) {
+            return false;
+        }
+
+        $body = wp_remote_retrieve_body($response);
+        $data = json_decode($body, true);
+
+        return (isset($data['tag_name'])) ? $data : false;
     }
 
-    public static function normalize_source($source, $remote_source, $upgrader, $hook_extra) {
-        $repo = self::get_repo();
-        if (! $repo) { return $source; }
-        $plugin_dir = dirname(plugin_basename(PODIFY_EVENTS_PATH . 'podify-events.php'));
-        $basename = basename($source);
-        if (strpos($basename, $plugin_dir) !== false) { return $source; }
-        $target = trailingslashit(dirname($source)) . $plugin_dir;
-        if (! @rename($source, $target)) { return $source; }
-        return $target;
+    /**
+     * Plugin popup info (View details)
+     */
+    public function plugin_popup_info($result, $action, $args) {
+        if ($action !== 'plugin_information') return $result;
+        if ($args->slug !== $this->slug) return $result;
+
+        $latest_release = $this->get_latest_release();
+        if (!$latest_release) return $result;
+
+        $res = new \stdClass();
+        $res->name = 'Podify Events';
+        $res->slug = $this->slug;
+        $res->version = ltrim($latest_release['tag_name'], 'v');
+        $res->author = '<a href="https://github.com/'.$this->user.'">'.$this->user.'</a>';
+        $res->homepage = "https://github.com/{$this->user}/{$this->repo}";
+        $res->download_link = $latest_release['zipball_url'];
+        $res->sections = [
+            'description' => $latest_release['body'] ?? 'Podify Events custom event management system.',
+            'changelog'   => 'Check the repository for latest changes.'
+        ];
+
+        return $res;
+    }
+
+    /**
+     * Inject GitHub token for private repo downloads
+     */
+    public function inject_github_token($args, $url) {
+        // Only inject if it's a GitHub request to our repo
+        if (strpos($url, 'api.github.com') !== false && strpos($url, "{$this->user}/{$this->repo}") !== false) {
+            $token = $this->get_token();
+            if ($token) {
+                $args['headers']['Authorization'] = "Bearer $token";
+            }
+        }
+        return $args;
+    }
+
+    /**
+     * Normalize the folder name after extraction
+     */
+    public function normalize_folder_name($source, $remote_source, $upgrader, $hook_extra) {
+        // GitHub zipballs usually have names like user-repo-hash or repo-tag
+        // We look for the repo name in the source folder
+        if (strpos(basename($source), $this->repo) !== false) {
+            $new_source = trailingslashit(dirname($source)) . $this->slug . '/';
+            if (rename($source, $new_source)) {
+                return $new_source;
+            }
+        }
+        return $source;
+    }
+
+    /**
+     * Get the token from constant
+     */
+    private function get_token() {
+        if ($this->token_constant && defined($this->token_constant)) {
+            return constant($this->token_constant);
+        }
+        return false;
     }
 }
-
-add_action('plugins_loaded', ['Podify_Events_GitHub_Updater', 'bootstrap'], 9);
-

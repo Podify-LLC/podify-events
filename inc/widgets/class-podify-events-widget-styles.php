@@ -314,7 +314,7 @@ class Podify_Events_Widget_Styles {
     color: #222;
     font-size: 20px;
     font-weight: 600;
-    display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+    display:block; overflow:hidden; text-overflow:ellipsis; 
 }
 .event-title a:hover {
     color: #0073aa;
@@ -332,7 +332,6 @@ class Podify_Events_Widget_Styles {
     color: #555;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 /* no multi-line clamp for excerpt in fallback */
 

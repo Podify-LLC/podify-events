@@ -42,7 +42,7 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
             if (class_exists('Podify_Events_Widget_Styles')) {
                 Podify_Events_Widget_Styles::register_handles();
             }
-            return ['podify-events-css', 'podify-swiper-css'];
+            return ['podify-events-css', 'podify-swiper-css', 'dashicons'];
         }
 
         public function get_script_depends()
@@ -84,7 +84,56 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
                 'condition' => ['show_option' => 'select'],
             ]);
 
-            $this->add_control('show_excerpt', ['label' => esc_html__('Show Excerpt', 'podify-events'), 'type' => Controls_Manager::SWITCHER, 'default' => 'yes']);
+            $this->add_control('show_excerpt', ['label' => esc_html__('Show Description', 'podify-events'), 'type' => Controls_Manager::SWITCHER, 'default' => 'yes']);
+            
+            $this->add_control('excerpt_limit_type', [
+                'label' => esc_html__('Description Limit', 'podify-events'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'words',
+                'options' => [
+                    'unlimited' => esc_html__('No Limit (Full Description)', 'podify-events'),
+                    'words' => esc_html__('Limit by Words', 'podify-events'),
+                    'characters' => esc_html__('Limit by Characters', 'podify-events'),
+                ],
+                'condition' => ['show_excerpt' => 'yes'],
+            ]);
+            
+            $this->add_control('excerpt_words_limit', [
+                'label' => esc_html__('Word Limit', 'podify-events'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 20,
+                'min' => 1,
+                'max' => 500,
+                'condition' => [
+                    'show_excerpt' => 'yes',
+                    'excerpt_limit_type' => 'words',
+                ],
+                'description' => esc_html__('Number of words to display', 'podify-events'),
+            ]);
+            
+            $this->add_control('excerpt_char_limit', [
+                'label' => esc_html__('Character Limit', 'podify-events'),
+                'type' => Controls_Manager::NUMBER,
+                'default' => 150,
+                'min' => 1,
+                'max' => 1000,
+                'condition' => [
+                    'show_excerpt' => 'yes',
+                    'excerpt_limit_type' => 'characters',
+                ],
+                'description' => esc_html__('Number of characters to display', 'podify-events'),
+            ]);
+            
+            $this->add_control('excerpt_ellipsis', [
+                'label' => esc_html__('Add Ellipsis (...)', 'podify-events'),
+                'type' => Controls_Manager::SWITCHER,
+                'default' => 'yes',
+                'condition' => [
+                    'show_excerpt' => 'yes',
+                    'excerpt_limit_type!' => 'unlimited',
+                ],
+            ]);
+            
             $this->add_control('posts_per_page', ['label' => esc_html__('Posts Per Page', 'podify-events'), 'type' => Controls_Manager::NUMBER, 'default' => 6, 'min' => 1]);
             $this->add_control('orderby', ['label' => esc_html__('Order By', 'podify-events'), 'type' => Controls_Manager::SELECT, 'default' => 'date', 'options' => ['date' => esc_html__('Date', 'podify-events'), 'title' => esc_html__('Title', 'podify-events'), 'rand' => esc_html__('Random', 'podify-events')]]);
             $this->add_control('order', ['label' => esc_html__('Order', 'podify-events'), 'type' => Controls_Manager::SELECT, 'default' => 'DESC', 'options' => ['ASC' => 'ASC', 'DESC' => 'DESC']]);
@@ -286,19 +335,65 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
 
             // Style simplified (image + content)
             $this->start_controls_section('style_image', ['label' => esc_html__('Image', 'podify-events'), 'tab' => Controls_Manager::TAB_STYLE]);
-            $this->add_responsive_control('image_height', ['label' => esc_html__('Image Height', 'podify-events'), 'type' => Controls_Manager::SLIDER, 'range' => ['px' => ['min' => 80, 'max' => 800]], 'selectors' => ['{{WRAPPER}} .event-image' => 'height:{{SIZE}}{{UNIT}};', '{{WRAPPER}} .event-image img' => 'height:{{SIZE}}{{UNIT}};object-fit:cover;']]);
-            $this->add_responsive_control('image_border_radius', ['label' => esc_html__('Image Border Radius', 'podify-events'), 'type' => Controls_Manager::DIMENSIONS, 'selectors' => [
-                '{{WRAPPER}} .event-image img' => 'border-radius:{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                '{{WRAPPER}} .podify-list-image img' => 'border-radius:{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-            ]]);
-            $this->add_responsive_control('image_container_radius', ['label' => esc_html__('Placeholder Border Radius', 'podify-events'), 'type' => Controls_Manager::DIMENSIONS, 'selectors' => [
-                '{{WRAPPER}} .event-image' => 'border-radius:{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                '{{WRAPPER}} .podify-list-image' => 'border-radius:{{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};'
-            ]]);
-            $this->add_responsive_control('list_image_size', ['label' => esc_html__('List Image Size', 'podify-events'), 'type' => Controls_Manager::SLIDER, 'range' => ['px' => ['min' => 100, 'max' => 360]], 'selectors' => [
-                '{{WRAPPER}} .podify-list-image' => 'width:{{SIZE}}{{UNIT}};height:{{SIZE}}{{UNIT}};',
-                '{{WRAPPER}} .podify-list-image img' => 'width:{{SIZE}}{{UNIT}};height:{{SIZE}}{{UNIT}};'
-            ], 'condition' => ['block_style' => 'list']]);
+            
+            $this->add_control('image_object_fit', [
+                'label' => esc_html__('Object Fit', 'podify-events'),
+                'type' => Controls_Manager::SELECT,
+                'default' => 'cover',
+                'options' => [
+                    'cover' => esc_html__('Cover', 'podify-events'),
+                    'contain' => esc_html__('Contain', 'podify-events'),
+                    'fill' => esc_html__('Fill', 'podify-events'),
+                    'none' => esc_html__('None', 'podify-events'),
+                    'scale-down' => esc_html__('Scale Down', 'podify-events'),
+                ],
+                'selectors' => [
+                    '{{WRAPPER}} .event-image img' => 'object-fit: {{VALUE}} !important;',
+                    '{{WRAPPER}} .podify-list-image img' => 'object-fit: {{VALUE}} !important;'
+                ],
+            ]);
+            
+            $this->add_responsive_control('image_height', [
+                'label' => esc_html__('Image Height', 'podify-events'), 
+                'type' => Controls_Manager::SLIDER, 
+                'range' => ['px' => ['min' => 80, 'max' => 800]], 
+                'selectors' => [
+                    '{{WRAPPER}} .event-image' => 'height: {{SIZE}}{{UNIT}} !important;', 
+                    '{{WRAPPER}} .event-image img' => 'height: {{SIZE}}{{UNIT}} !important;'
+                ]
+            ]);
+            
+            $this->add_responsive_control('image_border_radius', [
+                'label' => esc_html__('Image Border Radius', 'podify-events'), 
+                'type' => Controls_Manager::DIMENSIONS, 
+                'selectors' => [
+                    '{{WRAPPER}} .event-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    '{{WRAPPER}} .podify-list-image img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;'
+                ]
+            ]);
+            
+            $this->add_responsive_control('image_container_radius', [
+                'label' => esc_html__('Container Border Radius', 'podify-events'), 
+                'type' => Controls_Manager::DIMENSIONS, 
+                'selectors' => [
+                    '{{WRAPPER}} .event-image' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important; overflow: hidden;',
+                    '{{WRAPPER}} .podify-list-image' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important; overflow: hidden;'
+                ]
+            ]);
+            
+            $this->add_responsive_control('list_image_size', [
+                'label' => esc_html__('List Image Size', 'podify-events'), 
+                'type' => Controls_Manager::SLIDER, 
+                'range' => ['px' => ['min' => 100, 'max' => 360]], 
+                'selectors' => [
+                    '{{WRAPPER}} .podify-events-layout-list .event-image' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important; flex: 0 0 {{SIZE}}{{UNIT}} !important;',
+                    '{{WRAPPER}} .podify-events-layout-list .event-image img' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
+                    '{{WRAPPER}} .podify-list-image' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;',
+                    '{{WRAPPER}} .podify-list-image img' => 'width: {{SIZE}}{{UNIT}} !important; height: {{SIZE}}{{UNIT}} !important;'
+                ], 
+                'condition' => ['block_style' => 'list']
+            ]);
+            
             $this->end_controls_section();
 
             // Block Style
@@ -331,18 +426,139 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
             $this->end_controls_section();
 
             $this->start_controls_section('style_button', ['label' => esc_html__('Button', 'podify-events'), 'tab' => Controls_Manager::TAB_STYLE]);
-            $this->add_responsive_control('button_margin', ['label' => esc_html__('Margin', 'podify-events'), 'type' => Controls_Manager::DIMENSIONS, 'selectors' => ['{{WRAPPER}} .podify-read-more' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};']]);
-            $this->add_group_control(Group_Control_Typography::get_type(), ['name' => 'button_typography', 'selector' => '{{WRAPPER}} .podify-read-more']);
+            
+            // Button Alignment
+            $this->add_responsive_control('button_align', [
+                'label' => esc_html__('Alignment', 'podify-events'),
+                'type' => Controls_Manager::CHOOSE,
+                'options' => [
+                    'left' => [
+                        'title' => esc_html__('Left', 'podify-events'),
+                        'icon' => 'eicon-text-align-left',
+                    ],
+                    'center' => [
+                        'title' => esc_html__('Center', 'podify-events'),
+                        'icon' => 'eicon-text-align-center',
+                    ],
+                    'right' => [
+                        'title' => esc_html__('Right', 'podify-events'),
+                        'icon' => 'eicon-text-align-right',
+                    ],
+                ],
+                'default' => 'left',
+                'selectors' => [
+                    '{{WRAPPER}} .event-actions' => 'text-align: {{VALUE}} !important; display: block !important;',
+                ],
+            ]);
+            
+            $this->add_group_control(Group_Control_Typography::get_type(), [
+                'name' => 'button_typography', 
+                'selector' => '{{WRAPPER}} .podify-read-more'
+            ]);
+            
+            $this->add_responsive_control('button_padding', [
+                'label' => esc_html__('Padding', 'podify-events'), 
+                'type' => Controls_Manager::DIMENSIONS, 
+                'selectors' => [
+                    '{{WRAPPER}} .podify-read-more' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;'
+                ]
+            ]);
+            
+            $this->add_responsive_control('button_margin', [
+                'label' => esc_html__('Margin', 'podify-events'), 
+                'type' => Controls_Manager::DIMENSIONS, 
+                'selectors' => [
+                    '{{WRAPPER}} .podify-read-more' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;'
+                ]
+            ]);
+            
             $this->start_controls_tabs('button_style_tabs');
+            
+            // Normal State
             $this->start_controls_tab('button_tab_normal', ['label' => esc_html__('Normal', 'podify-events')]);
-            $this->add_control('button_bg_color', ['label' => esc_html__('Background Color', 'podify-events'), 'type' => Controls_Manager::COLOR, 'selectors' => ['{{WRAPPER}} .podify-read-more' => 'background-color: {{VALUE}};']]);
-            $this->add_control('button_text_color', ['label' => esc_html__('Text Color', 'podify-events'), 'type' => Controls_Manager::COLOR, 'selectors' => ['{{WRAPPER}} .podify-read-more' => 'color: {{VALUE}};']]);
+            
+            $this->add_control('button_text_color', [
+                'label' => esc_html__('Text Color', 'podify-events'), 
+                'type' => Controls_Manager::COLOR, 
+                'selectors' => [
+                    '{{WRAPPER}} .podify-read-more' => 'color: {{VALUE}} !important;'
+                ]
+            ]);
+            
+            $this->add_control('button_bg_color', [
+                'label' => esc_html__('Background Color', 'podify-events'), 
+                'type' => Controls_Manager::COLOR, 
+                'selectors' => [
+                    '{{WRAPPER}} .podify-read-more' => 'background-color: {{VALUE}} !important;'
+                ]
+            ]);
+            
+            $this->add_group_control(Group_Control_Border::get_type(), [
+                'name' => 'button_border',
+                'selector' => '{{WRAPPER}} .podify-read-more',
+            ]);
+            
+            $this->add_responsive_control('button_border_radius', [
+                'label' => esc_html__('Border Radius', 'podify-events'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'selectors' => [
+                    '{{WRAPPER}} .podify-read-more' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;'
+                ]
+            ]);
+            
+            $this->add_group_control(Group_Control_Box_Shadow::get_type(), [
+                'name' => 'button_box_shadow',
+                'selector' => '{{WRAPPER}} .podify-read-more',
+            ]);
+            
             $this->end_controls_tab();
+            
+            // Hover State
             $this->start_controls_tab('button_tab_hover', ['label' => esc_html__('Hover', 'podify-events')]);
-            $this->add_control('button_bg_color_hover', ['label' => esc_html__('Background Color', 'podify-events'), 'type' => Controls_Manager::COLOR, 'selectors' => ['{{WRAPPER}} .podify-read-more:hover' => 'background-color: {{VALUE}};']]);
-            $this->add_control('button_text_color_hover', ['label' => esc_html__('Text Color', 'podify-events'), 'type' => Controls_Manager::COLOR, 'selectors' => ['{{WRAPPER}} .podify-read-more:hover' => 'color: {{VALUE}};']]);
+            
+            $this->add_control('button_text_color_hover', [
+                'label' => esc_html__('Text Color', 'podify-events'), 
+                'type' => Controls_Manager::COLOR, 
+                'selectors' => [
+                    '{{WRAPPER}} .podify-read-more:hover' => 'color: {{VALUE}} !important; text-decoration: none !important;'
+                ]
+            ]);
+            
+            $this->add_control('button_bg_color_hover', [
+                'label' => esc_html__('Background Color', 'podify-events'), 
+                'type' => Controls_Manager::COLOR, 
+                'selectors' => [
+                    '{{WRAPPER}} .podify-read-more:hover' => 'background-color: {{VALUE}} !important;'
+                ]
+            ]);
+            
+            $this->add_group_control(Group_Control_Border::get_type(), [
+                'name' => 'button_border_hover',
+                'selector' => '{{WRAPPER}} .podify-read-more:hover',
+            ]);
+            
+            $this->add_responsive_control('button_border_radius_hover', [
+                'label' => esc_html__('Border Radius', 'podify-events'),
+                'type' => Controls_Manager::DIMENSIONS,
+                'selectors' => [
+                    '{{WRAPPER}} .podify-read-more:hover' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;'
+                ]
+            ]);
+            
+            $this->add_group_control(Group_Control_Box_Shadow::get_type(), [
+                'name' => 'button_box_shadow_hover',
+                'selector' => '{{WRAPPER}} .podify-read-more:hover',
+            ]);
+            
+            $this->add_control('button_hover_animation', [
+                'label' => esc_html__('Hover Animation', 'podify-events'),
+                'type' => Controls_Manager::HOVER_ANIMATION,
+            ]);
+            
             $this->end_controls_tab();
+            
             $this->end_controls_tabs();
+            
             $this->end_controls_section();
 
             $this->start_controls_section('style_badge_grid', ['label' => esc_html__('Badge (Grid)', 'podify-events'), 'tab' => Controls_Manager::TAB_STYLE]);
@@ -790,7 +1006,7 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
                         ? date_i18n('F j', strtotime($date)) . '—' . date_i18n('j Y', strtotime($date_end))
                         : date_i18n('F j Y', strtotime($date));
                 } else {
-                    $human = __('TBA', 'podify-events');
+                    $human = __('TBD', 'podify-events');
                 }
                 echo '<div class="meta-item"><span class="dashicons dashicons-calendar"></span><span class="meta-text">' . esc_html($human) . '</span></div>';
 
@@ -798,18 +1014,50 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
                 if ($time) {
                     $time_human = date_i18n('g:i a', strtotime($time));
                 } else {
-                    $time_human = __('TBA', 'podify-events');
+                    $time_human = __('TBD', 'podify-events');
                 }
                 echo '<div class="meta-item"><span class="dashicons dashicons-clock"></span><span class="meta-text">' . esc_html($time_human) . '</span></div>';
 
                 // Address
-                $addr_display = $address ? $address : __('TBA', 'podify-events');
+                $addr_display = $address ? $address : __('TBD', 'podify-events');
                 echo '<div class="meta-item"><span class="dashicons dashicons-location"></span><span class="meta-text">' . esc_html($addr_display) . '</span></div>';
 
                 echo '</div>';
 
                 if (! empty($settings['show_excerpt']) && $settings['show_excerpt'] === 'yes') {
-                    $excerpt = wp_trim_words(wp_strip_all_tags(get_the_excerpt()), 20);
+                    $raw_excerpt = wp_strip_all_tags(get_the_excerpt());
+                    $excerpt = '';
+                    
+                    // Get limit settings
+                    $limit_type = isset($settings['excerpt_limit_type']) ? $settings['excerpt_limit_type'] : 'words';
+                    $words_limit = isset($settings['excerpt_words_limit']) ? intval($settings['excerpt_words_limit']) : 20;
+                    $char_limit = isset($settings['excerpt_char_limit']) ? intval($settings['excerpt_char_limit']) : 150;
+                    $add_ellipsis = isset($settings['excerpt_ellipsis']) && $settings['excerpt_ellipsis'] === 'yes';
+                    
+                    // Apply limit based on type
+                    if ($limit_type === 'unlimited') {
+                        $excerpt = $raw_excerpt;
+                    } elseif ($limit_type === 'characters') {
+                        if (mb_strlen($raw_excerpt) > $char_limit) {
+                            $excerpt = mb_substr($raw_excerpt, 0, $char_limit);
+                            if ($add_ellipsis) {
+                                $excerpt .= '...';
+                            }
+                        } else {
+                            $excerpt = $raw_excerpt;
+                        }
+                    } else { // words (default)
+                        $words = explode(' ', $raw_excerpt);
+                        if (count($words) > $words_limit) {
+                            $excerpt = implode(' ', array_slice($words, 0, $words_limit));
+                            if ($add_ellipsis) {
+                                $excerpt .= '...';
+                            }
+                        } else {
+                            $excerpt = $raw_excerpt;
+                        }
+                    }
+                    
                     echo '<div class="event-excerpt">' . esc_html($excerpt) . '</div>';
                 }
 
@@ -913,14 +1161,17 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
                                                 },
                                             <?php endif; ?>
                                             breakpoints: {
-                                                640: {
-                                                    slidesPerView: <?php echo $slides_mobile; ?>
+                                                0: {
+                                                    slidesPerView: <?php echo $slides_mobile; ?>,
+                                                    spaceBetween: <?php echo $space_between; ?>
                                                 },
                                                 768: {
-                                                    slidesPerView: <?php echo $slides_tablet; ?>
+                                                    slidesPerView: <?php echo $slides_tablet; ?>,
+                                                    spaceBetween: <?php echo $space_between; ?>
                                                 },
                                                 1024: {
-                                                    slidesPerView: <?php echo $slides_desktop; ?>
+                                                    slidesPerView: <?php echo $slides_desktop; ?>,
+                                                    spaceBetween: <?php echo $space_between; ?>
                                                 }
                                             },
                                             <?php if ($show_arrows) : ?>

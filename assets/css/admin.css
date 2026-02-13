@@ -1,0 +1,451 @@
+/**
+ * Modern Admin Dashboard Styles for Podify Events
+ */
+
+ .seic-admin-wrapper {
+    margin: 20px 20px 0 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    color: #1e293b;
+}
+
+.seic-admin-wrapper.sidebar-layout {
+    display: flex;
+    min-height: calc(100vh - 60px);
+    margin: 0;
+    background: #f8fafc;
+}
+
+/* Sidebar Styling */
+.seic-sidebar {
+    width: 260px;
+    background: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    padding: 30px 0;
+    flex-shrink: 0;
+}
+
+.seic-sidebar-header {
+    padding: 0 25px 30px;
+}
+
+.seic-logo-container {
+    margin-bottom: 15px;
+}
+
+.seic-logo-container img {
+    max-width: 140px;
+    height: auto;
+}
+
+/* Vertical Navigation */
+.seic-nav-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.seic-nav-vertical .seic-nav-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    text-decoration: none;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    border-left: 3px solid transparent;
+}
+
+.seic-nav-vertical .seic-nav-item:hover {
+    background: #f1f5f9;
+    color: #2563eb;
+}
+
+.seic-nav-vertical .seic-nav-item.active {
+    background: #eff6ff;
+    color: #2563eb;
+    border-left-color: #2563eb;
+}
+
+.seic-nav-vertical .seic-nav-item .dashicons {
+    margin-right: 12px;
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+}
+
+/* Main Content Area */
+.seic-main-content {
+    flex: 1;
+    padding: 40px;
+    max-width: 1200px;
+    overflow-y: auto;
+}
+
+/* Unified Badge Styling */
+.seic-unified-badge {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 11px;
+    gap: 0;
+}
+
+.seic-unified-badge.inline {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-left: 15px;
+}
+
+.seic-v-text {
+    background: #f0f9ff;
+    color: #0073aa;
+    padding: 6px 12px;
+    border-radius: 50px 0 0 50px;
+    border: 1px solid #d0e8f5;
+    font-size: 13px;
+}
+
+.seic-f-text {
+    background: #f59e0b; /* Gold/Orange */
+    color: #ffffff;
+    padding: 6px 15px;
+    border-radius: 0 50px 50px 0;
+    border: 1px solid #f59e0b;
+    font-size: 13px;
+}
+
+/* Banner Styling */
+.seic-banner {
+    background: linear-gradient(90deg, #2563eb 0%, #3b82f6 100%);
+    border-radius: 20px;
+    padding: 60px;
+    color: #ffffff;
+    margin-bottom: 40px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.2);
+    text-align: center;
+}
+
+.seic-banner-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin: 0 0 15px;
+    color: #ffffff !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.seic-banner-text {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Grid Layout */
+.seic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+/* Card Styling */
+.seic-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    padding: 30px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.seic-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.seic-card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.seic-card-header .dashicons {
+    color: #3b82f6;
+    margin-right: 12px;
+    font-size: 20px;
+}
+
+.seic-card-header h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: #1e293b;
+}
+
+/* Status Badge */
+.seic-status-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+}
+
+.seic-status-badge.success {
+    background: #ecfdf5;
+    color: #10b981;
+}
+
+/* Feature List */
+.seic-feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.seic-feature-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    align-items: center;
+    color: #64748b;
+    font-size: 14px;
+}
+
+.seic-feature-list li:last-child {
+    border-bottom: none;
+}
+
+.seic-feature-list.green-checks .dashicons {
+    color: #10b981;
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+/* Quick Actions Grid */
+.seic-quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.seic-action-box {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    color: #1e293b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.seic-action-box:hover {
+    background: #eff6ff;
+    border-color: #3b82f6;
+    color: #2563eb;
+}
+
+.seic-action-box .dashicons {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+}
+
+.seic-action-box span:not(.dashicons) {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Mini Event List */
+.seic-event-mini-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.seic-event-mini-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.seic-event-title {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 14px;
+}
+
+.seic-event-date {
+    font-size: 12px;
+    color: #64748b;
+}
+
+.seic-no-events {
+    font-size: 14px;
+    color: #94a3b8;
+    font-style: italic;
+    margin: 0;
+}
+
+/* Buttons */
+.seic-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    font-size: 14px;
+    border: none;
+}
+
+.seic-btn-primary {
+    background: #ffffff;
+    color: #2563eb;
+}
+
+.seic-btn-primary:hover {
+    background: #f1f5f9;
+    transform: translateY(-1px);
+}
+
+.seic-btn-outline {
+    background: #3b82f6;
+    color: #ffffff;
+}
+
+.seic-btn-outline:hover {
+    background: #2563eb;
+}
+
+.seic-btn.icon-btn .dashicons {
+    margin-right: 8px;
+    font-size: 18px;
+}
+
+/* Utilities */
+.centered {
+    text-align: center;
+}
+
+.small-text {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 15px;
+}
+
+.seic-details-list p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.seic-details-list strong {
+    color: #1e293b;
+}
+
+/* Tab Content */
+.seic-tab-content {
+    display: none;
+}
+
+.seic-tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Changelog content styling */
+.seic-changelog-content {
+    line-height: 1.6;
+    color: #4b5563;
+}
+
+.seic-section-header {
+    margin-bottom: 30px;
+}
+
+.seic-section-header h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #1e293b;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .seic-admin-wrapper.sidebar-layout {
+        flex-direction: column;
+    }
+    
+    .seic-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e2e8f0;
+        padding: 20px 0;
+    }
+    
+    .seic-sidebar-header {
+        padding-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .seic-nav-vertical {
+        flex-direction: row;
+        overflow-x: auto;
+        padding: 0 20px;
+    }
+    
+    .seic-nav-vertical .seic-nav-item {
+        border-left: none;
+        border-bottom: 3px solid transparent;
+        white-space: nowrap;
+    }
+    
+    .seic-nav-vertical .seic-nav-item.active {
+        border-bottom-color: #2563eb;
+    }
+    
+    .seic-main-content {
+        padding: 30px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .seic-banner {
+        padding: 40px 20px;
+    }
+    
+    .seic-banner-title {
+        font-size: 24px;
+    }
+    
+    .seic-grid {
+        grid-template-columns: 1fr;
+    }
+}

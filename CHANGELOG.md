@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.7 – 2026-01-22
+## 1.0.9 – 2026-02-14
+- **New Admin Dashboard**: Implemented a modern, responsive "General" dashboard with a horizontal header and unified branding.
+- **GitHub Updater Integration**: Added support for automated updates directly from GitHub repositories (Public/Private).
+- **Elementor Widget Enhancements**: Fixed carousel layout issues and improved responsiveness across breakpoints.
+- **Improved UI/UX**: Added professional badges, linear gradient banners, and streamlined navigation in the admin panel.
+
+## 1.0.8 – 2026-01-29
 - Fixed persistent Elementor editor rendering issues by renaming the grid container class to `.podify-events-flex-grid` to avoid conflicts with base styles.
 - Updated JS initialization to support the new grid class.
 - Ensured backend editor preview matches frontend layout perfectly.
@@ -21,7 +27,7 @@ All notable changes to this project will be documented in this file.
 - Fixed button alignment: buttons now consistently align to the bottom of the card, even with varying content length.
 
 ## 1.0.3 – 2026-01-22
-- Added "TBA" placeholder for events missing Date, Time, or Address information.
+- Added "TBD" placeholder for events missing Date, Time, or Address information.
 
 ## 1.0.2 – 2026-01-22
 - Improved CSS layout consistency: cards now have uniform height in grid/list views.

@@ -55,7 +55,7 @@ get_header(); ?>
                                     else { $human = date_i18n( 'F j Y', strtotime( $date ) ); }
                                     echo '<div class="meta-item"><span class="dashicons dashicons-calendar" aria-hidden="true"></span><span class="meta-text">' . esc_html( $human ) . '</span></div>';
                                 } else {
-                                    echo '<div class="meta-item"><span class="dashicons dashicons-calendar" aria-hidden="true"></span><span class="meta-text">' . esc_html__( 'TBA', 'podify-events' ) . '</span></div>';
+                                    echo '<div class="meta-item"><span class="dashicons dashicons-calendar" aria-hidden="true"></span><span class="meta-text">' . esc_html__( 'TBD', 'podify-events' ) . '</span></div>';
                                 }
                                 if ( $time ) { echo '<div class="meta-item"><span class="dashicons dashicons-clock" aria-hidden="true"></span><span class="meta-text">' . esc_html( $time ) . '</span></div>'; }
                                 if ( $address ) { echo '<div class="meta-item"><span class="dashicons dashicons-location" aria-hidden="true"></span><span class="meta-text">' . esc_html( $address ) . '</span></div>'; }

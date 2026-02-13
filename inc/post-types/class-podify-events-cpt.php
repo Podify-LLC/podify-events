@@ -43,7 +43,7 @@ class Podify_Events_CPT {
             'description'         => __( 'Events managed by the Podify Events plugin', 'podify-events' ),
             'public'              => true,
             'show_ui'             => true,
-            'show_in_menu'        => true,
+            'show_in_menu'        => 'podify-events',
             'menu_icon'           => 'dashicons-calendar-alt',
             'supports'            => [ 'title', 'editor', 'thumbnail', 'excerpt' ],
             'has_archive'         => true,
