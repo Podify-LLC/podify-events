@@ -33,7 +33,7 @@ class Podify_Events_CPT {
             'search_items'          => __( 'Search Events', 'podify-events' ),
             'not_found'             => __( 'No events found.', 'podify-events' ),
             'not_found_in_trash'    => __( 'No events found in trash.', 'podify-events' ),
-            'all_items'             => __( 'All Events', 'podify-events' ),
+            'all_items'             => __( 'Events List', 'podify-events' ),
             'archives'              => __( 'Event Archives', 'podify-events' ),
         ];
 

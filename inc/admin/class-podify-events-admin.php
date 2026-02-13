@@ -126,47 +126,145 @@ class Podify_Events_Admin {
         }
 
         echo '<style>
-            /* Global Admin Buttons & Layout Modernization */
-            .wp-core-ui .button-primary {
-                background: #4f46e5 !important;
-                border: none !important;
-                border-radius: 6px !important;
-                box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2) !important;
-                padding: 4px 16px !important;
-                height: auto !important;
-                line-height: 2 !important;
-                font-weight: 500 !important;
-                transition: all 0.2s ease !important;
-            }
-            .wp-core-ui .button-primary:hover {
-                background: #4338ca !important;
-                transform: translateY(-1px) !important;
-                box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3) !important;
-            }
-            .wp-core-ui .button-secondary {
-                border-radius: 6px !important;
-                border: 1px solid #e2e8f0 !important;
-                color: #4a5568 !important;
-                padding: 4px 16px !important;
-                height: auto !important;
-                line-height: 2 !important;
-                font-weight: 500 !important;
-                transition: all 0.2s ease !important;
-            }
-            .wp-core-ui .button-secondary:hover {
-                background: #f8f9fa !important;
-                border-color: #cbd5e0 !important;
-                color: #2d3748 !important;
+            /* Layout Fixes & Modernization */
+            .post-type-podify_event .wp-header-end { display: none; }
+            .post-type-podify_event .wrap {
+                margin: 25px 20px 0 20px !important;
+                max-width: none !important;
             }
 
-            /* Admin List Table Modernization */
+            /* Header Area Flex Layout */
+            .post-type-podify_event .wp-heading-inline {
+                margin: 0 15px 15px 0 !important;
+                display: inline-block !important;
+                vertical-align: middle;
+            }
+            
+            .post-type-podify_event .page-title-action {
+                vertical-align: middle;
+                margin-top: -12px !important;
+            }
+            .post-type-podify_event .page-title-action::before {
+                content: "\f132";
+                font-family: dashicons;
+                font-size: 16px;
+                margin-right: 5px;
+            }
+
+            /* Status Links (All | Published | Trash) */
+            .post-type-podify_event .subsubsub {
+                margin: 0 !important;
+                padding: 15px 0 !important;
+                float: left !important;
+                display: block;
+                line-height: 28px;
+            }
+            .post-type-podify_event .subsubsub li {
+                font-size: 13px;
+                color: #718096;
+            }
+            .post-type-podify_event .subsubsub li a {
+                color: #4a5568;
+                padding: 4px 8px;
+                border-radius: 4px;
+                transition: all 0.2s;
+            }
+            .post-type-podify_event .subsubsub li a.current {
+                background: #edf2ff;
+                color: #4f46e5;
+                font-weight: 600;
+            }
+
+            /* Search Box - Aligned with status links */
+            .post-type-podify_event .search-box {
+                float: right !important;
+                margin: 12px 0 !important;
+                position: relative;
+            }
+            .post-type-podify_event .search-box input[type="search"] {
+                width: 280px !important;
+                padding: 10px 16px 10px 40px !important;
+                border: 1px solid #e2e8f0 !important;
+                border-radius: 10px !important;
+                background: #fff !important;
+                font-size: 14px !important;
+                transition: all 0.2s ease !important;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.02) !important;
+            }
+            .post-type-podify_event .search-box input[type="search"]:focus {
+                border-color: #4f46e5 !important;
+                box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1) !important;
+                outline: none !important;
+            }
+            .post-type-podify_event #search-submit {
+                display: none !important;
+            }
+            .post-type-podify_event .search-box::before {
+                content: "\f179";
+                font-family: dashicons;
+                position: absolute;
+                left: 14px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: #a0aec0;
+                font-size: 18px;
+                z-index: 1;
+            }
+
+            /* Table Navigation (Filters) */
+            .post-type-podify_event .tablenav.top {
+                clear: both;
+                background: #f8fafc;
+                padding: 15px !important;
+                border-radius: 12px 12px 0 0;
+                border: 1px solid #edf2f7;
+                border-bottom: none;
+                height: auto !important;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .post-type-podify_event .tablenav .actions {
+                padding: 0 !important;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+            .post-type-podify_event .tablenav .actions select {
+                border-radius: 8px !important;
+                border: 1px solid #e2e8f0 !important;
+                padding: 4px 10px !important;
+                background: #fff !important;
+                font-size: 13px !important;
+                color: #4a5568 !important;
+                height: 36px !important;
+                min-width: 140px;
+            }
+            .post-type-podify_event .tablenav .button {
+                border-radius: 8px !important;
+                border: 1px solid #e2e8f0 !important;
+                background: #fff !important;
+                padding: 0 15px !important;
+                height: 36px !important;
+                line-height: 34px !important;
+                font-weight: 600 !important;
+                color: #4a5568 !important;
+                transition: all 0.2s !important;
+            }
+            .post-type-podify_event .tablenav .button:hover {
+                background: #f1f5f9 !important;
+                border-color: #cbd5e0 !important;
+            }
+
+            /* List Table Overhaul */
             .wp-list-table {
-                border: none !important;
-                box-shadow: 0 4px 20px rgba(0,0,0,0.04) !important;
-                border-radius: 12px !important;
+                border: 1px solid #edf2f7 !important;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.03) !important;
+                border-radius: 0 0 12px 12px !important;
                 overflow: hidden !important;
                 background: #fff !important;
-                margin-top: 25px !important;
                 border-collapse: separate !important;
                 border-spacing: 0 !important;
             }
@@ -175,101 +273,74 @@ class Podify_Events_Admin {
                 padding: 16px 12px !important;
                 border-bottom: 1px solid #edf2f7 !important;
                 font-weight: 600 !important;
-                color: #1a202c !important;
+                color: #4a5568 !important;
                 text-transform: uppercase !important;
                 font-size: 11px !important;
                 letter-spacing: 0.05em !important;
             }
             .wp-list-table tbody td {
-                padding: 18px 12px !important;
+                padding: 20px 12px !important;
                 vertical-align: middle !important;
                 border-bottom: 1px solid #f7fafc !important;
-                color: #4a5568 !important;
-                font-size: 14px !important;
-            }
-            .wp-list-table tbody tr:last-child td {
-                border-bottom: none !important;
+                color: #2d3748 !important;
             }
             .wp-list-table tbody tr:hover {
                 background-color: #fcfdfe !important;
             }
-            .column-thumbnail { width: 70px !important; }
+
+            /* Column Specific Styles */
+            .column-thumbnail { width: 80px !important; }
             .column-thumbnail img {
-                box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-                border: 2px solid #fff;
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                border-radius: 8px !important;
+                width: 48px !important;
+                height: 48px !important;
+                object-fit: cover;
+                border-radius: 10px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
             }
-            .column-thumbnail img:hover {
-                transform: scale(1.15) rotate(2deg);
+            
+            .column-title {
+                min-width: 250px;
             }
             .column-title strong a {
-                color: #1a202c !important;
-                font-size: 16px !important;
+                font-size: 15px !important;
                 font-weight: 700 !important;
-                text-decoration: none !important;
-                transition: color 0.2s !important;
-            }
-            .column-title strong a:hover {
-                color: #4f46e5 !important;
+                color: #1a202c !important;
+                display: block;
+                margin-bottom: 4px;
             }
             .column-title .row-actions {
-                margin-top: 6px !important;
                 visibility: visible !important;
-                opacity: 0.4;
-                transition: opacity 0.2s;
+                opacity: 0.5;
             }
             tr:hover .column-title .row-actions {
                 opacity: 1;
             }
-            .column-title .row-actions span a {
-                color: #718096 !important;
-                font-size: 12px !important;
-            }
-            .column-title .row-actions span.trash a {
-                color: #e53e3e !important;
-            }
-            
+
+            .column-event_date { width: 160px; }
             .column-event_date strong {
                 color: #4f46e5;
                 background: #eef2ff;
-                padding: 6px 10px;
+                padding: 5px 10px;
                 border-radius: 6px;
-                font-size: 13px;
-                display: inline-block;
+                font-size: 12px;
                 font-weight: 600;
-            }
-            .column-event_time, .column-event_address {
-                font-size: 14px;
-                color: #4a5568;
-            }
-            .column-event_time {
-                font-weight: 500;
-            }
-            
-            /* Badges for status */
-            .column-date {
-                font-size: 12px !important;
-                color: #a0aec0 !important;
+                white-space: nowrap;
             }
 
-            /* Search Box & Filters */
-            .search-box input[type="search"] {
+            .column-event_time { width: 100px; font-weight: 500; }
+            .column-event_address { width: 220px; color: #718096; font-size: 13px; }
+
+            /* Buttons Global */
+            /* .wp-core-ui .button-primary {
+                background: #4f46e5 !important;
+                border: none !important;
+                box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2) !important;
+                height: 36px !important;
+                line-height: 36px !important;
+                padding: 0 20px !important;
                 border-radius: 8px !important;
-                border: 1px solid #e2e8f0 !important;
-                padding: 6px 12px !important;
-                box-shadow: none !important;
-            }
-            .tablenav .actions select {
-                border-radius: 6px !important;
-                border: 1px solid #e2e8f0 !important;
-                height: 32px !important;
-            }
-            
-            /* Alignments */
-            .column-event_date { width: 180px; }
-            .column-event_time { width: 120px; }
-            .column-event_address { width: 200px; }
+                font-weight: 600 !important;
+            } */
         </style>';
     }
 

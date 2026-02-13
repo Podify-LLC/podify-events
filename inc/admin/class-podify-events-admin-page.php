@@ -24,7 +24,7 @@ class Podify_Events_Admin_Page {
             25
         );
 
-        // Submenu: General
+        // Submenu: General (Hides the default duplicate by matching slug)
         add_submenu_page(
             'podify-events',
             __('General', 'podify-events'),
@@ -60,6 +60,18 @@ class Podify_Events_Admin_Page {
             'manage_options',
             'podify-events#settings',
             [$this, 'render_admin_page']
+        );
+
+        // Fix duplicate "All Events" menu created by CPT registration
+        remove_submenu_page('podify-events', 'edit.php?post_type=podify_event');
+        
+        // Re-add it manually to control position and label if needed
+        add_submenu_page(
+            'podify-events',
+            __('All Events', 'podify-events'),
+            __('All Events', 'podify-events'),
+            'manage_options',
+            'edit.php?post_type=podify_event'
         );
     }
 

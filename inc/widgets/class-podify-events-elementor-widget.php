@@ -618,9 +618,8 @@ if (! class_exists('Podify_Events_Elementor_Widget')) {
             $ppp = 6;
             if (isset($settings['posts_per_page'])) {
                 $ppp = absint($settings['posts_per_page']);
-                if ($ppp < 1) {
-                    $ppp = 6;
-                }
+                // Clamp to reasonable range 1-100 to avoid performance/memory issues
+                $ppp = max(1, min($ppp, 100));
             }
 
             $args = [

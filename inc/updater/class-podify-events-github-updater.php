@@ -8,6 +8,9 @@
 
 namespace Podify;
 
+use WP_Error;
+use stdClass;
+
 if (!defined('ABSPATH')) exit;
 
 class Github_Updater {
@@ -58,7 +61,7 @@ class Github_Updater {
 
         $result = $this->get_latest_release_detailed();
         
-        if (is_wp_error($result)) {
+        if (\is_wp_error($result)) {
             $code = $result->get_error_code();
             $msg = $result->get_error_message();
             
@@ -103,7 +106,7 @@ class Github_Updater {
         $new_version = ltrim($latest_release['tag_name'], 'v');
 
         if (version_compare($new_version, $current_version, '>')) {
-            $obj = new \stdClass();
+            $obj = new stdClass();
             $obj->slug = $this->slug;
             $obj->plugin = $this->basename;
             $obj->new_version = $new_version;
@@ -137,7 +140,7 @@ class Github_Updater {
 
         $response = wp_remote_get($url, $args);
 
-        if (is_wp_error($response)) {
+        if (\is_wp_error($response)) {
             return $response;
         }
 
@@ -161,7 +164,7 @@ class Github_Updater {
      */
     private function get_latest_release() {
         $result = $this->get_latest_release_detailed();
-        return is_wp_error($result) ? false : $result;
+        return \is_wp_error($result) ? false : $result;
     }
 
     /**
@@ -174,7 +177,7 @@ class Github_Updater {
         $latest_release = $this->get_latest_release();
         if (!$latest_release) return $result;
 
-        $res = new \stdClass();
+        $res = new stdClass();
         $res->name = 'Podify Events';
         $res->slug = $this->slug;
         $res->version = ltrim($latest_release['tag_name'], 'v');
