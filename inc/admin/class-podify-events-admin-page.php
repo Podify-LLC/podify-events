@@ -24,13 +24,41 @@ class Podify_Events_Admin_Page {
             25
         );
 
-        // Submenu: General (Duplicate of Main Menu)
+        // Submenu: General
         add_submenu_page(
             'podify-events',
             __('General', 'podify-events'),
             __('General', 'podify-events'),
             'manage_options',
             'podify-events',
+            [$this, 'render_admin_page']
+        );
+
+        // Submenu: All Events (Points to CPT list)
+        add_submenu_page(
+            'podify-events',
+            __('All Events', 'podify-events'),
+            __('All Events', 'podify-events'),
+            'manage_options',
+            'edit.php?post_type=podify_event'
+        );
+
+        // Submenu: Add New Event (Points to CPT add new)
+        add_submenu_page(
+            'podify-events',
+            __('Add New Event', 'podify-events'),
+            __('Add New Event', 'podify-events'),
+            'manage_options',
+            'post-new.php?post_type=podify_event'
+        );
+
+        // Submenu: Settings
+        add_submenu_page(
+            'podify-events',
+            __('Settings', 'podify-events'),
+            __('Settings', 'podify-events'),
+            'manage_options',
+            'podify-events#settings',
             [$this, 'render_admin_page']
         );
     }
@@ -53,6 +81,15 @@ class Podify_Events_Admin_Page {
             ['jquery'],
             PODIFY_EVENTS_VERSION,
             true
+        );
+
+        wp_localize_script(
+            'podify-events-admin-js',
+            'podifyEventsAdmin',
+            [
+                'ajaxUrl' => admin_url('admin-ajax.php'),
+                'nonce'   => wp_create_nonce('podify_events_admin'),
+            ]
         );
     }
 
@@ -144,10 +181,6 @@ class Podify_Events_Admin_Page {
                     <div class="seic-banner">
                         <h1 class="seic-banner-title">
                             Welcome to Podify Events Pro
-                            <div class="seic-unified-badge inline">
-                                <span class="seic-v-text">v<?php echo esc_html($version); ?></span>
-                                <span class="seic-f-text">PRO</span>
-                            </div>
                         </h1>
                         <p class="seic-banner-text">The professional solution for managing and displaying events in WordPress. Create, organize, and showcase your events with a modern Elementor-powered experience.</p>
                         <div class="seic-banner-actions">
@@ -165,7 +198,7 @@ class Podify_Events_Admin_Page {
                             <div class="seic-card-body centered">
                                 <div class="seic-status-badge success">UP TO DATE</div>
                                 <p>Currently running v<?php echo esc_html($version); ?></p>
-                                <a href="#" class="seic-btn seic-btn-outline icon-btn">
+                                <a href="#" class="seic-btn seic-btn-outline icon-btn seic-btn-check-update">
                                     <span class="dashicons dashicons-update"></span>
                                     Check Now
                                 </a>
@@ -206,11 +239,11 @@ class Podify_Events_Admin_Page {
                                         <span class="dashicons dashicons-calendar-alt"></span>
                                         <span>All Events</span>
                                     </a>
-                                    <a href="#features" class="seic-nav-item" data-tab="features">
+                                    <a href="#features" class="seic-action-box" data-tab="features">
                                         <span class="dashicons dashicons-star-filled"></span>
                                         <span>Features</span>
                                     </a>
-                                    <a href="#settings" class="seic-nav-item" data-tab="settings">
+                                    <a href="#settings" class="seic-action-box" data-tab="settings">
                                         <span class="dashicons dashicons-admin-settings"></span>
                                         <span>Settings</span>
                                     </a>
@@ -227,10 +260,15 @@ class Podify_Events_Admin_Page {
                             <div class="seic-card-body">
                                 <?php if ($current_query->have_posts()) : ?>
                                     <ul class="seic-event-mini-list">
-                                        <?php while ($current_query->have_posts()) : $current_query->the_post(); ?>
+                                        <?php while ($current_query->have_posts()) : $current_query->the_post(); 
+                                            $custom_link = get_post_meta(get_the_ID(), '_podify_event_button_url', true);
+                                            $event_link = !empty($custom_link) ? $custom_link : get_permalink();
+                                        ?>
                                             <li>
-                                                <span class="seic-event-title"><?php the_title(); ?></span>
-                                                <span class="seic-event-date"><?php echo esc_html(get_post_meta(get_the_ID(), '_podify_event_date_start', true)); ?></span>
+                                                <a href="<?php echo esc_url($event_link); ?>" class="seic-event-item-link" <?php echo !empty($custom_link) ? 'target="_blank" rel="noopener"' : ''; ?>>
+                                                    <span class="seic-event-title"><?php the_title(); ?></span>
+                                                    <span class="seic-event-date"><?php echo esc_html(get_post_meta(get_the_ID(), '_podify_event_date_start', true)); ?></span>
+                                                </a>
                                             </li>
                                         <?php endwhile; wp_reset_postdata(); ?>
                                     </ul>
@@ -249,10 +287,15 @@ class Podify_Events_Admin_Page {
                             <div class="seic-card-body">
                                 <?php if ($upcoming_query->have_posts()) : ?>
                                     <ul class="seic-event-mini-list">
-                                        <?php while ($upcoming_query->have_posts()) : $upcoming_query->the_post(); ?>
+                                        <?php while ($upcoming_query->have_posts()) : $upcoming_query->the_post(); 
+                                            $custom_link = get_post_meta(get_the_ID(), '_podify_event_button_url', true);
+                                            $event_link = !empty($custom_link) ? $custom_link : get_permalink();
+                                        ?>
                                             <li>
-                                                <span class="seic-event-title"><?php the_title(); ?></span>
-                                                <span class="seic-event-date"><?php echo esc_html(get_post_meta(get_the_ID(), '_podify_event_date_start', true)); ?></span>
+                                                <a href="<?php echo esc_url($event_link); ?>" class="seic-event-item-link" <?php echo !empty($custom_link) ? 'target="_blank" rel="noopener"' : ''; ?>>
+                                                    <span class="seic-event-title"><?php the_title(); ?></span>
+                                                    <span class="seic-event-date"><?php echo esc_html(get_post_meta(get_the_ID(), '_podify_event_date_start', true)); ?></span>
+                                                </a>
                                             </li>
                                         <?php endwhile; wp_reset_postdata(); ?>
                                     </ul>

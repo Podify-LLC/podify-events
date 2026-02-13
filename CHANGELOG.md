@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.10 – 2026-02-14
+- **Admin Menu Restructuring**: Reordered the admin menu to follow the flow: General, All Events, Add New Event, and Settings.
+- **Modernized "All Events" UI**: Redesigned the WordPress admin list table for events with a Pro-inspired look, including card-like styling, shadows, and rounded corners.
+- **Clickable Dashboard Events**: Updated the "Current" and "Upcoming" event lists on the dashboard to be fully interactive, linking to either a custom URL or the event details page.
+- **Quick Action Widget Fixes**: Unified the styling of quick action boxes and improved tab-switching responsiveness.
+- **CPT Label Refinement**: Updated "Add New" labels to "Add New Event" across the admin interface for better UX.
+
 ## 1.0.9 – 2026-02-14
 - **Pro Version Upgrade**: Officially transitioned to the Pro version with enhanced branding and layout.
 - **New Admin Dashboard**: Implemented a modern, responsive "General" dashboard with a professional vertical sidebar layout.

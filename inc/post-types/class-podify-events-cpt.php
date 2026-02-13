@@ -25,7 +25,7 @@ class Podify_Events_CPT {
             'singular_name'         => __( 'Event', 'podify-events' ),
             'menu_name'             => __( 'Events', 'podify-events' ),
             'name_admin_bar'        => __( 'Event', 'podify-events' ),
-            'add_new'               => __( 'Add New', 'podify-events' ),
+            'add_new'               => __( 'Add New Event', 'podify-events' ),
             'add_new_item'          => __( 'Add New Event', 'podify-events' ),
             'edit_item'             => __( 'Edit Event', 'podify-events' ),
             'new_item'              => __( 'New Event', 'podify-events' ),

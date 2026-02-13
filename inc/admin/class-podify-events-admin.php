@@ -126,14 +126,71 @@ class Podify_Events_Admin {
         }
 
         echo '<style>
-            .column-thumbnail { width: 70px; }
-            .column-event_date,
-            .column-event_time,
-            .column-event_address {
-                width: 150px;
+            /* Admin List Modernization */
+            .wp-list-table {
+                border: none !important;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
+                border-radius: 12px !important;
+                overflow: hidden !important;
+                background: #fff !important;
+                margin-top: 20px !important;
+            }
+            .wp-list-table thead th {
+                background: #f8f9fa !important;
+                padding: 15px 10px !important;
+                border-bottom: 2px solid #edf2f7 !important;
+                font-weight: 600 !important;
+                color: #2d3748 !important;
+            }
+            .wp-list-table tbody td {
+                padding: 15px 10px !important;
+                vertical-align: middle !important;
+                border-bottom: 1px solid #edf2f7 !important;
+                color: #4a5568 !important;
+            }
+            .wp-list-table tbody tr:hover {
+                background-color: #f7fafc !important;
+            }
+            .column-thumbnail { width: 80px !important; }
+            .column-thumbnail img {
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                border: 2px solid #fff;
+                transition: transform 0.2s;
+            }
+            .column-thumbnail img:hover {
+                transform: scale(1.1);
+            }
+            .column-title strong a {
+                color: #4f46e5 !important;
+                font-size: 15px !important;
+                font-weight: 600 !important;
+                text-decoration: none !important;
+            }
+            .column-title .row-actions {
+                visibility: visible !important;
+                opacity: 0.5;
+                transition: opacity 0.2s;
+            }
+            tr:hover .column-title .row-actions {
+                opacity: 1;
+            }
+            .column-event_date strong {
+                color: #2d3748;
+                background: #ebf4ff;
+                padding: 4px 8px;
+                border-radius: 4px;
+                font-size: 12px;
+            }
+            .column-event_time, .column-event_address {
+                font-size: 13px;
+                color: #718096;
+            }
+            /* Alignments */
+            .column-event_date, .column-event_time, .column-event_address {
+                width: 160px;
             }
             .column-event_address {
-                width: 220px;
+                width: 240px;
             }
         </style>';
     }

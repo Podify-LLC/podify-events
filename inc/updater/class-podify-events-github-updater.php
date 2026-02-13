@@ -41,6 +41,36 @@ class Github_Updater {
 
         // Folder Normalization: Ensure extracted folder matches plugin slug
         add_filter('upgrader_source_selection', [$this, 'normalize_folder_name'], 10, 4);
+
+        // Manual Update Check AJAX
+        add_action('wp_ajax_podify_check_update', [$this, 'ajax_check_update']);
+    }
+
+    /**
+     * AJAX handler for manual update check
+     */
+    public function ajax_check_update() {
+        check_ajax_referer('podify_events_admin', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error(['message' => 'Unauthorized']);
+        }
+
+        $latest_release = $this->get_latest_release();
+        if (!$latest_release) {
+            wp_send_json_error(['message' => 'Could not connect to GitHub']);
+        }
+
+        $new_version = ltrim($latest_release['tag_name'], 'v');
+        $current_version = PODIFY_EVENTS_VERSION;
+        $is_update_available = version_compare($new_version, $current_version, '>');
+
+        wp_send_json_success([
+            'latest' => $new_version,
+            'current' => $current_version,
+            'is_available' => $is_update_available,
+            'message' => $is_update_available ? 'New version available!' : 'You are up to date!'
+        ]);
     }
 
     /**

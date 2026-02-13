@@ -8,7 +8,7 @@ A lightweight and modern events management plugin designed for Podify, including
 - Requires at least: `5.0`
 - Tested up to: `6.7`
 - Requires PHP: `7.4`
-- Stable tag: `1.0.9`
+- Stable tag: `1.0.10`
 - License: `GPLv2 or later`
 - License URI: `https://www.gnu.org/licenses/gpl-2.0.html`
 
@@ -46,6 +46,13 @@ update_option('podify_github_token', 'ghp_xxxxxxxxx');
 
 ## Changelog
 
+### 1.0.10
+- **Admin Menu Restructuring**: Reordered menu to General, All Events, Add New Event, and Settings.
+- **Modernized All Events Layout**: Overhauled the admin list table with a Pro-inspired design, shadows, and rounded corners.
+- **Interactive Events**: Current and Upcoming events on the dashboard are now clickable, redirecting to custom URLs or event details.
+- **Quick Action Fixes**: Unified styling and improved functionality of the quick action widgets.
+- **CPT Label Updates**: Refined "Add New Event" labels for better clarity.
+
 ### 1.0.9
 - Upgraded to **Pro Version** branding and features.
 - New professional vertical sidebar dashboard layout.
@@ -59,6 +66,9 @@ update_option('podify_github_token', 'ghp_xxxxxxxxx');
 - GitHub auto-update support.
 
 ## Upgrade Notice
+
+### 1.0.10
+UI improvements to the "All Events" list and restructured admin menu for better navigation.
 
 ### 1.0.9
 Significant UI update with a new professional Pro dashboard and improved Elementor widget support.

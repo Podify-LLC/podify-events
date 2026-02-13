@@ -2,12 +2,8 @@
 
 // ---- GitHub Auto-updater Initialization ----
 if ( is_admin() ) {
-    if ( file_exists( plugin_dir_path( __FILE__ ) . 'includes/github-updater.php' ) ) {
-        require_once plugin_dir_path( __FILE__ ) . 'includes/github-updater.php';
-        // Replace with your actual repo: owner/repo
-        if ( class_exists( 'Podify_GitHub_Updater' ) ) {
-            $podify_updater = new Podify_GitHub_Updater( __FILE__, 'yourusername/your-repo', 'main' );
-        }
+    if ( class_exists( 'Podify\Github_Updater' ) ) {
+        new Podify\Github_Updater( __FILE__, 'johnrodney', 'podify-events' );
     }
 }
 // ---- end updater init ----
@@ -15,7 +11,7 @@ if ( is_admin() ) {
 /**
  * Plugin Name: Podify Events Pro
  * Description: A custom event management system with database table + Elementor widget integration
- * Version: 1.0.9
+ * Version: 1.0.10
  * Tested up to: 6.6
  * Requires PHP: 7.4
  * Author: Podify Inc.
