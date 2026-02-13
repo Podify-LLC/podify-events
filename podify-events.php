@@ -1,13 +1,5 @@
 <?php
 
-// ---- GitHub Auto-updater Initialization ----
-if ( is_admin() ) {
-    if ( class_exists( 'Podify\Github_Updater' ) ) {
-        new Podify\Github_Updater( __FILE__, 'johnrodney', 'podify-events' );
-    }
-}
-// ---- end updater init ----
-
 /**
  * Plugin Name: Podify Events Pro
  * Description: A custom event management system with database table + Elementor widget integration
@@ -154,6 +146,11 @@ register_deactivation_hook(__FILE__, 'podify_events_deactivate');
 
 function podify_events_plugins_loaded()
 {
+    // Initialize GitHub Updater
+    if (is_admin() && class_exists('Podify\Github_Updater')) {
+        new Podify\Github_Updater(__FILE__, 'johnrodney', 'podify-events');
+    }
+
     if (class_exists('Podify_Events_CPT')) {
         try {
             new Podify_Events_CPT();
