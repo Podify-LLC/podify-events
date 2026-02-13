@@ -126,72 +126,150 @@ class Podify_Events_Admin {
         }
 
         echo '<style>
-            /* Admin List Modernization */
+            /* Global Admin Buttons & Layout Modernization */
+            .wp-core-ui .button-primary {
+                background: #4f46e5 !important;
+                border: none !important;
+                border-radius: 6px !important;
+                box-shadow: 0 2px 4px rgba(79, 70, 229, 0.2) !important;
+                padding: 4px 16px !important;
+                height: auto !important;
+                line-height: 2 !important;
+                font-weight: 500 !important;
+                transition: all 0.2s ease !important;
+            }
+            .wp-core-ui .button-primary:hover {
+                background: #4338ca !important;
+                transform: translateY(-1px) !important;
+                box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3) !important;
+            }
+            .wp-core-ui .button-secondary {
+                border-radius: 6px !important;
+                border: 1px solid #e2e8f0 !important;
+                color: #4a5568 !important;
+                padding: 4px 16px !important;
+                height: auto !important;
+                line-height: 2 !important;
+                font-weight: 500 !important;
+                transition: all 0.2s ease !important;
+            }
+            .wp-core-ui .button-secondary:hover {
+                background: #f8f9fa !important;
+                border-color: #cbd5e0 !important;
+                color: #2d3748 !important;
+            }
+
+            /* Admin List Table Modernization */
             .wp-list-table {
                 border: none !important;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.05) !important;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.04) !important;
                 border-radius: 12px !important;
                 overflow: hidden !important;
                 background: #fff !important;
-                margin-top: 20px !important;
+                margin-top: 25px !important;
+                border-collapse: separate !important;
+                border-spacing: 0 !important;
             }
             .wp-list-table thead th {
-                background: #f8f9fa !important;
-                padding: 15px 10px !important;
-                border-bottom: 2px solid #edf2f7 !important;
+                background: #fdfdfd !important;
+                padding: 16px 12px !important;
+                border-bottom: 1px solid #edf2f7 !important;
                 font-weight: 600 !important;
-                color: #2d3748 !important;
+                color: #1a202c !important;
+                text-transform: uppercase !important;
+                font-size: 11px !important;
+                letter-spacing: 0.05em !important;
             }
             .wp-list-table tbody td {
-                padding: 15px 10px !important;
+                padding: 18px 12px !important;
                 vertical-align: middle !important;
-                border-bottom: 1px solid #edf2f7 !important;
+                border-bottom: 1px solid #f7fafc !important;
                 color: #4a5568 !important;
+                font-size: 14px !important;
+            }
+            .wp-list-table tbody tr:last-child td {
+                border-bottom: none !important;
             }
             .wp-list-table tbody tr:hover {
-                background-color: #f7fafc !important;
+                background-color: #fcfdfe !important;
             }
-            .column-thumbnail { width: 80px !important; }
+            .column-thumbnail { width: 70px !important; }
             .column-thumbnail img {
-                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.08);
                 border: 2px solid #fff;
-                transition: transform 0.2s;
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                border-radius: 8px !important;
             }
             .column-thumbnail img:hover {
-                transform: scale(1.1);
+                transform: scale(1.15) rotate(2deg);
             }
             .column-title strong a {
-                color: #4f46e5 !important;
-                font-size: 15px !important;
-                font-weight: 600 !important;
+                color: #1a202c !important;
+                font-size: 16px !important;
+                font-weight: 700 !important;
                 text-decoration: none !important;
+                transition: color 0.2s !important;
+            }
+            .column-title strong a:hover {
+                color: #4f46e5 !important;
             }
             .column-title .row-actions {
+                margin-top: 6px !important;
                 visibility: visible !important;
-                opacity: 0.5;
+                opacity: 0.4;
                 transition: opacity 0.2s;
             }
             tr:hover .column-title .row-actions {
                 opacity: 1;
             }
+            .column-title .row-actions span a {
+                color: #718096 !important;
+                font-size: 12px !important;
+            }
+            .column-title .row-actions span.trash a {
+                color: #e53e3e !important;
+            }
+            
             .column-event_date strong {
-                color: #2d3748;
-                background: #ebf4ff;
-                padding: 4px 8px;
-                border-radius: 4px;
-                font-size: 12px;
+                color: #4f46e5;
+                background: #eef2ff;
+                padding: 6px 10px;
+                border-radius: 6px;
+                font-size: 13px;
+                display: inline-block;
+                font-weight: 600;
             }
             .column-event_time, .column-event_address {
-                font-size: 13px;
-                color: #718096;
+                font-size: 14px;
+                color: #4a5568;
             }
+            .column-event_time {
+                font-weight: 500;
+            }
+            
+            /* Badges for status */
+            .column-date {
+                font-size: 12px !important;
+                color: #a0aec0 !important;
+            }
+
+            /* Search Box & Filters */
+            .search-box input[type="search"] {
+                border-radius: 8px !important;
+                border: 1px solid #e2e8f0 !important;
+                padding: 6px 12px !important;
+                box-shadow: none !important;
+            }
+            .tablenav .actions select {
+                border-radius: 6px !important;
+                border: 1px solid #e2e8f0 !important;
+                height: 32px !important;
+            }
+            
             /* Alignments */
-            .column-event_date, .column-event_time, .column-event_address {
-                width: 160px;
-            }
-            .column-event_address {
-                width: 240px;
-            }
+            .column-event_date { width: 180px; }
+            .column-event_time { width: 120px; }
+            .column-event_address { width: 200px; }
         </style>';
     }
 

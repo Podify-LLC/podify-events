@@ -56,16 +56,24 @@ class Github_Updater {
             wp_send_json_error(['message' => 'Unauthorized']);
         }
 
-        $latest_release = $this->get_latest_release();
-        if (!$latest_release) {
-            $token = $this->get_token();
-            $msg = 'Could not connect to GitHub.';
-            if (!$token) {
-                $msg .= ' If the repository is private, please set your GitHub token in the plugin settings or README instructions.';
+        $result = $this->get_latest_release_detailed();
+        
+        if (is_wp_error($result)) {
+            $code = $result->get_error_code();
+            $msg = $result->get_error_message();
+            
+            if ($code == 401 || $code == 403) {
+                $msg = "Authentication failed ($code). Please check if your GitHub Token in wp-config.php is correct and has 'repo' permissions.";
+            } elseif ($code == 404) {
+                $msg = "Repository not found (404). Please check if 'johnrodney/podify-events' is correct and a Release has been created on GitHub.";
+            } else {
+                $msg = "GitHub Connection Error ($code): $msg";
             }
+            
             wp_send_json_error(['message' => $msg]);
         }
 
+        $latest_release = $result;
         $new_version = ltrim($latest_release['tag_name'], 'v');
         $current_version = PODIFY_EVENTS_VERSION;
         $is_update_available = version_compare($new_version, $current_version, '>');
@@ -109,16 +117,17 @@ class Github_Updater {
     }
 
     /**
-     * Get latest release data from GitHub API
+     * Get latest release data from GitHub API with detailed error reporting
      */
-    private function get_latest_release() {
+    private function get_latest_release_detailed() {
         $url = "https://api.github.com/repos/{$this->user}/{$this->repo}/releases/latest";
         
         $args = [
             'headers' => [
-                'Accept' => 'application/vnd.github.v3+json',
+                'Accept' => 'application/vnd.github+json',
                 'User-Agent' => 'WordPress/' . get_bloginfo('version') . '; ' . home_url('/')
-            ]
+            ],
+            'timeout' => 15
         ];
 
         $token = $this->get_token();
@@ -127,21 +136,32 @@ class Github_Updater {
         }
 
         $response = wp_remote_get($url, $args);
+
         if (is_wp_error($response)) {
-            error_log('[Podify Events] GitHub API Error: ' . $response->get_error_message());
-            return false;
+            return $response;
         }
 
         $code = wp_remote_retrieve_response_code($response);
+        $body = wp_remote_retrieve_body($response);
+
         if ($code !== 200) {
-            error_log('[Podify Events] GitHub API Error Code: ' . $code . ' for URL: ' . $url);
-            return false;
+            return new WP_Error($code, 'GitHub API response error');
         }
 
-        $body = wp_remote_retrieve_body($response);
         $data = json_decode($body, true);
+        if (empty($data) || !isset($data['tag_name'])) {
+            return new WP_Error('invalid_response', 'Invalid response from GitHub');
+        }
 
-        return (isset($data['tag_name'])) ? $data : false;
+        return $data;
+    }
+
+    /**
+     * Get latest release data from GitHub API (legacy/wrapper)
+     */
+    private function get_latest_release() {
+        $result = $this->get_latest_release_detailed();
+        return is_wp_error($result) ? false : $result;
     }
 
     /**
@@ -173,11 +193,16 @@ class Github_Updater {
      * Inject GitHub token for private repo downloads
      */
     public function inject_github_token($args, $url) {
-        // Only inject if it's a GitHub request to our repo
-        if (strpos($url, 'api.github.com') !== false && strpos($url, "{$this->user}/{$this->repo}") !== false) {
+        // Only intercept requests to GitHub domains
+        if (strpos($url, 'api.github.com') !== false || strpos($url, 'codeload.github.com') !== false || strpos($url, 'objects.githubusercontent.com') !== false) {
             $token = $this->get_token();
             if ($token) {
                 $args['headers']['Authorization'] = "Bearer $token";
+                
+                // Set appropriate Accept header for API discovery
+                if (strpos($url, 'api.github.com') !== false && strpos($url, '/releases/assets/') === false) {
+                    $args['headers']['Accept'] = 'application/vnd.github+json';
+                }
             }
         }
         return $args;
